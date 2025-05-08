@@ -23,9 +23,9 @@ const AssignCard: React.FC<AssignCardProps> = ({ advocateName, advocateNumber })
           <div className="flex-shrink-0">
             <div className="w-32 h-28 border border-gray-200 rounded-md flex items-center justify-center bg-white">
               <img 
-                src="/lovable-uploads/2f1bbe8b-519a-40b8-a1cc-d6cd5a73ccbe.png" 
+                src="https://superlawyer.in/wp-content/uploads/2017/01/dilip-taur-3-1000x600.jpg" 
                 alt="Advocate Profile" 
-                className="w-28 opacity-30"
+                className="w-28 opacity-90 "
               />
             </div>
           </div>

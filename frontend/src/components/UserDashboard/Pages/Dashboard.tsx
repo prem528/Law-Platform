@@ -11,13 +11,13 @@ const Dashboard = () => {
         status="Pending from Online Legal India"
         deliveryStatus="Delivered"
         approved={{
-          date: "2023-11-27"
+          date: "dd/mm/yyyy"
         }}
       />
       
       <AssignCard
-        advocateName="Sayantani Sarkar"
-        advocateNumber="8069021542"
+        advocateName="Lawyer's Name"
+        advocateNumber="123456789"
       />
     </div>
   );

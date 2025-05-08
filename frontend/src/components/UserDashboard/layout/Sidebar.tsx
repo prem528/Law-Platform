@@ -46,7 +46,7 @@ const Sidebar = () => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-2 py-4 space-y-1">
+        <nav className="flex-1 px-2 py-4 space-y-4">
           {navigation.map((item) => {
             const isActive = location.pathname === item.href;
             return (
@@ -70,7 +70,9 @@ const Sidebar = () => {
         {/* User Info */}
         <div className="p-4 border-t border-primary-foreground/10">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-full bg-primary-foreground/20" />
+             <img src='https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740'
+              alt='user' 
+             className='w-8 h-auto rounded-full'/>
             {!collapsed && (
               <div>
                 <p className="text-sm font-medium">John Doe</p>
