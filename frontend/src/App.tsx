@@ -1,14 +1,15 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster } from "./components/ui/toaster";
 import { Toaster as SonnerToaster } from "sonner";
 import AppLayout from "./components/UserDashboard/layout/AppLayout";
 import Dashboard from "./components/UserDashboard/Pages/Dashboard";
 import MyCases from "./components/UserDashboard/Pages/MyCases";
-import NotFound from "./components/UserDashboard/Pages/NotFound";
-import Notifications from "./components/UserDashboard/Pages/Notifications";
 import SubmitCase from "./components/UserDashboard/Pages/SubmitCase";
+import Notifications from "./components/UserDashboard/Pages/Notifications";
+import NotFound from "./components/UserDashboard/Pages/NotFound";
+import { SidebarProvider } from "@/contexts/SidebarContext";
 
 const queryClient = new QueryClient();
 
@@ -17,45 +18,31 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <SonnerToaster />
-      <BrowserRouter>
-        <Routes>
-          <Route 
-            path="/" 
-            element={
-              <AppLayout>
-                <Dashboard />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/my-cases" 
-            element={
-              <AppLayout>
-                <MyCases />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/submit-case" 
-            element={
-              <AppLayout>
-                <SubmitCase />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/notifications" 
-            element={
-              <AppLayout>
-                <Notifications />
-              </AppLayout>
-            } 
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <SidebarProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Parent route with layout */}
+            <Route element={<AppLayoutWrapper />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/mycases" element={<MyCases />} />
+              <Route path="/submitcase" element={<SubmitCase />} />
+              <Route path="/notifications" element={<Notifications />} />
+            </Route>
+
+            {/* 404 route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </SidebarProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
 
 export default App;
+
+// This wraps child routes with AppLayout and lets <Outlet /> render them inside it
+const AppLayoutWrapper = () => (
+  <AppLayout>
+    <Outlet />
+  </AppLayout>
+);

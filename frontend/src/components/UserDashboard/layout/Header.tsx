@@ -1,5 +1,4 @@
- 
-import { User, ChevronDown } from 'lucide-react';
+import { User, ChevronDown, Menu } from 'lucide-react';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -9,12 +8,23 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 const Header = () => {
+  const { toggleSidebar } = useSidebar();
+
   return (
     <header className="bg-white shadow-lg p-4 flex items-center justify-between border">
-      <div className='ml-2'>
-        <h1 className="text-lg font-medium text-gray-700">Case Navigator Dashboard</h1>
+      <div className='flex items-center gap-4'>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={toggleSidebar}
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+        <h1 className="text-lg font-medium text-gray-700">Case Dashboard</h1>
       </div>
       
       <div className="flex items-center space-x-4">

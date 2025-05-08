@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  user
+  lawyer
+  admin
+  management
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String
+  name          String
+  role          Role
+  cases         Case[]         @relation("UserCases")
+  assigned      Case[]         @relation("LawyerCases")
+  uploadedDocs  Document[]     @relation("UploadedDocs") // ✅ Add this
+  notifications Notification[]
+  createdAt     DateTime       @default(now())
+}
+
+model Case {
+  id          String     @id @default(uuid())
+  title       String
+  type        String
+  description String
+  status      String     @default("Pending")
+  userId      String
+  lawyerId    String?
+  user        User       @relation("UserCases", fields: [userId], references: [id])
+  lawyer      User?      @relation("LawyerCases", fields: [lawyerId], references: [id])
+  documents   Document[]
+  createdAt   DateTime   @default(now())
+}
+
+model Document {
+  id           String @id @default(uuid())
+  filename     String
+  fileUrl      String
+  uploadedById String
+  caseId       String
+
+  uploadedBy User     @relation("UploadedDocs", fields: [uploadedById], references: [id]) // ✅ updated
+  case       Case     @relation(fields: [caseId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
