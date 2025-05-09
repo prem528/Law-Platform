@@ -24,7 +24,7 @@ const App = () => (
             {/* Parent route with layout */}
             <Route element={<AppLayoutWrapper />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/mycases" element={<MyCases />} />
+              <Route path="/docs" element={<MyCases />} />
               <Route path="/submitcase" element={<SubmitCase />} />
               <Route path="/notifications" element={<Notifications />} />
             </Route>

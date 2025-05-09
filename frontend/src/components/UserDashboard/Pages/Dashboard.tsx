@@ -6,6 +6,7 @@ import StatusBadge from "../dashboard/StatusBadge";
 import LawyerInfo from "../dashboard/LawyerInfo";
 import DocumentList from "../dashboard/DocumentList";
 import API from "../../../../api/axios";
+import DocumentViewer from "../dashboard/DocumentViewer";
 
 interface Lawyer {
   name: string;
@@ -46,13 +47,13 @@ const Dashboard = () => {
           setLoading(false);
         });
     }, 1000); // 1 second delay
-  
+
     return () => clearTimeout(timer); // Cleanup on unmount
   }, []);
-  
+
 
   const handleViewDetails = (caseId: string) => {
-     
+
     API.get<Case>(`/cases/${caseId}`)
       .then((res) => {
         setSelectedCase(res.data);
@@ -60,7 +61,7 @@ const Dashboard = () => {
       })
       .catch((err) => {
         console.error("Failed to fetch case details", err);
-        
+
       });
   };
 
@@ -74,7 +75,7 @@ const Dashboard = () => {
       minute: "2-digit",
     });
   };
-  
+
 
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white">
@@ -131,10 +132,10 @@ const Dashboard = () => {
                     </div>
 
                     <div className="mt-4 text-right">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="text-blue-500 border-blue-200/20 cursor-pointer" 
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-blue-500 border-blue-200/20 cursor-pointer"
                         onClick={() => handleViewDetails(caseItem.id)}
                       >
                         View Details <ChevronRight className="ml-1 h-4 w-4" />
@@ -148,10 +149,10 @@ const Dashboard = () => {
         ) : (
           <div className="animate-fade-in">
             <div className="flex items-center mb-6">
-              <Button 
-                variant="ghost" 
-                size="lg" 
-                className="text-blue-600 hover:bg-slate-100 hover:text-blue-700 cursor-pointer" 
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-blue-600 hover:bg-slate-100 hover:text-blue-700 cursor-pointer"
                 onClick={() => setSelectedCase(null)}
               >
                 <ChevronRight className="h-6 w-6 rotate-180 mr-1" /> Back
@@ -192,15 +193,11 @@ const Dashboard = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="border-0 shadow-md overflow-hidden">
-                  <div className="h-6 bg-slate-300 w-full"></div>
-                  <CardHeader className="border-b">
-                    <CardTitle className="text-lg">Case Documents</CardTitle>
-                  </CardHeader>
-                  <CardContent className="py-5">
-                    <DocumentList documents={selectedCase.documents} />
-                  </CardContent>
-                </Card>
+                <DocumentViewer
+                  documents={selectedCase.documents}
+                  caseId={selectedCase.id}
+                  onRefresh={() => handleViewDetails(selectedCase.id)}
+                />
               </div>
 
               <div className="space-y-6">
