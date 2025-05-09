@@ -13,7 +13,7 @@ const StatusBadge = ({ status, className }: StatusBadgeProps) => {
       case "active":
         return "bg-green-100 text-green-800 border-green-200";
       case "pending":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+        return "bg-yellow-100 text-yellow-800 border-yellow-200 text-lg rounded-sm";
       case "closed":
         return "bg-gray-100 text-gray-800 border-gray-200";
       case "urgent":
