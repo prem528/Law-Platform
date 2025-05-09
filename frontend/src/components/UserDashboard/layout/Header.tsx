@@ -24,7 +24,7 @@ const Header = () => {
         >
           <Menu className="h-5 w-5" />
         </Button>
-        <h1 className="text-lg font-medium text-gray-700">Case Dashboard</h1>
+        <h1 className="text-lg font-medium text-gray-700">User Dashboard</h1>
       </div>
       
       <div className="flex items-center space-x-4">

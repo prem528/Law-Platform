@@ -1,6 +1,9 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+
+//---------------------SubmitCase Controller logic---------------
+
 const submitCase = async (req, res) => {
   const { title, type, description } = req.body;
 
@@ -21,8 +24,9 @@ const submitCase = async (req, res) => {
   }
 };
 
-module.exports = { submitCase };
 
+
+//----------------GetMyCases Controller logic-----------------
 
 const getMyCases = async (req, res) => {
     try {
@@ -48,5 +52,100 @@ const getMyCases = async (req, res) => {
     }
   };
   
-  module.exports = { submitCase, getMyCases };
+
+  //-----------------View the Single Case-------------------------
+  
+  const getSingleCase = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const userCase = await prisma.case.findUnique({
+        where: { id },
+        include: {
+          documents: true,
+          lawyer: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      });
+  
+      if (!userCase || userCase.userId !== req.user.id) {
+        return res.status(403).json({ message: "Unauthorized or case not found" });
+      }
+  
+      res.json(userCase);
+    } catch (error) {
+      console.error("Error fetching case:", error);
+      res.status(500).json({ message: "Failed to fetch case" });
+    }
+  };
+  
+
+
+// -----------uploadDocuments Controller logic-------------------
+
+  const uploadDocument = async (req, res) => {
+    const { caseId } = req.params;
+    const file = req.file;
+  
+    if (!file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+  
+    try {
+      const newDoc = await prisma.document.create({
+        data: {
+          filename: file.originalname,
+          fileUrl: file.path,
+          caseId,
+          uploadedById: req.user.id,
+        },
+      });
+  
+      res.status(201).json({ message: "Document uploaded", document: newDoc });
+    } catch (error) {
+      console.error("Upload error:", error);
+      res.status(500).json({ message: "Failed to upload document" });
+    }
+  };
+
+  //-------------------View Case Documents----------------------
+
+  const getCaseDocuments = async (req, res) => {
+    const { caseId } = req.params;
+  
+    try {
+      const documents = await prisma.document.findMany({
+        where: { caseId },
+        orderBy: { createdAt: "desc" },
+        include: {
+          uploadedBy: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      });
+  
+      res.json({ documents });
+    } catch (error) {
+      console.error("Error fetching documents:", error);
+      res.status(500).json({ message: "Failed to fetch documents" });
+    }
+  };
+  
+
+  module.exports = {
+    submitCase,
+    getMyCases,
+    getSingleCase,
+    uploadDocument,
+    getCaseDocuments
+  };
   
