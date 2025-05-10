@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileText, ChevronRight } from "lucide-react";
+import { FileText, ChevronRight, FolderPlus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import DocumentUpload from "./DocumentUpload";
@@ -27,23 +27,28 @@ const DocumentViewer = ({ caseId, documents = [], onRefresh }: DocumentViewerPro
   };
 
   return (
-    <Card className="">
-      <div className="h-1 bg-legal-accent w-full"></div>
-      <CardHeader className="border-b flex flex-row items-center justify-between">
-        <CardTitle className="text-lg">Case Documents</CardTitle>
+    <Card className="border-0 shadow-md overflow-hidden">
+      <div className="h-6 bg-blue-200 w-full"></div>
+      <CardHeader className="border-b flex flex-row items-center justify-between py-4">
+        <CardTitle className="text-xl font-medium">Case Documents</CardTitle>
         <Button 
           variant="outline" 
-          size="sm"
+          size="lg"
           onClick={() => setShowUpload(!showUpload)}
-          className="text-legal-secondary border-legal-secondary/20 hover:border-legal-secondary/50"
+          className="text-blue-400 border-blue-300 hover:border-blue-400 hover:bg-blue-100 "
         >
-          {showUpload ? "Cancel" : "Upload New Document"}
+          {showUpload ? "Cancel" : 
+            <div className="flex items-center gap-1.5">
+              <FolderPlus className="h-3.5 w-3.5" />
+              <span>Upload Documents</span>
+            </div>
+          }
         </Button>
       </CardHeader>
-      <CardContent className="py-5">
+      <CardContent className="p-4">
         {showUpload && (
-          <div className="mb-6 p-4 bg-gray-50 rounded-md border border-gray-100">
-            <h3 className="text-sm font-medium mb-3">Upload Documents</h3>
+          <div className="mb-4 p-3 bg-gray-50 rounded-md border border-gray-100">
+            <h3 className="text-sm font-medium mb-2">Upload Documents</h3>
             <DocumentUpload caseId={caseId} onUploadComplete={handleUploadComplete} />
           </div>
         )}
@@ -56,29 +61,29 @@ const DocumentViewer = ({ caseId, documents = [], onRefresh }: DocumentViewerPro
                 href={`http://localhost:5000/${doc.fileUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center p-3 rounded-md hover:bg-gray-50 border border-gray-100 transition-colors group"
+                className="flex items-center p-2.5 rounded-md hover:bg-gray-50 border border-gray-100 transition-colors group"
               >
-                <div className="p-2 bg-blue-50 rounded-md group-hover:bg-blue-100 transition-colors">
-                  <FileText className="h-5 w-5 text-legal-secondary" />
+                <div className="p-1.5 bg-blue-50 rounded-md group-hover:bg-blue-100 transition-colors">
+                  <FileText className="h-4 w-4 text-legal-secondary" />
                 </div>
-                <div className="ml-3 flex-1 min-w-0">
+                <div className="ml-2 flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">{doc.filename}</p>
                   <p className="text-xs text-gray-500">Click to view</p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                <ChevronRight className="h-3.5 w-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" />
               </a>
             ))}
           </div>
         ) : (
-          <div className="flex items-center justify-center py-6 border border-dashed border-gray-300 rounded-md bg-gray-50">
+          <div className="flex items-center justify-center py-5 border border-dashed border-gray-300 rounded-md bg-gray-50">
             <div className="text-center">
-              <FileText className="h-8 w-8 mx-auto text-gray-400" />
-              <p className="mt-2 text-sm text-gray-500">No documents uploaded yet</p>
+              <FileText className="h-7 w-7 mx-auto text-gray-400 mb-2" />
+              <p className="text-sm text-gray-500">No documents uploaded</p>
               {!showUpload && (
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="mt-3"
+                  className="mt-2 text-xs"
                   onClick={() => setShowUpload(true)}
                 >
                   Upload your first document

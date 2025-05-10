@@ -5,11 +5,12 @@ import { Toaster } from "./components/ui/toaster";
 import { Toaster as SonnerToaster } from "sonner";
 import AppLayout from "./components/UserDashboard/layout/AppLayout";
 import Dashboard from "./components/UserDashboard/Pages/Dashboard";
-import MyCases from "./components/UserDashboard/Pages/MyCases";
+
 import SubmitCase from "./components/UserDashboard/Pages/SubmitCase";
 import Notifications from "./components/UserDashboard/Pages/Notifications";
 import NotFound from "./components/UserDashboard/Pages/NotFound";
 import { SidebarProvider } from "@/contexts/SidebarContext";
+import DocumentPage from "./components/UserDashboard/dashboard/DocumentPage";
 
 const queryClient = new QueryClient();
 
@@ -24,9 +25,10 @@ const App = () => (
             {/* Parent route with layout */}
             <Route element={<AppLayoutWrapper />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/docs" element={<MyCases />} />
+
               <Route path="/submitcase" element={<SubmitCase />} />
               <Route path="/notifications" element={<Notifications />} />
+              <Route path="/docs" element={<DocumentPage />} />
             </Route>
 
             {/* 404 route */}

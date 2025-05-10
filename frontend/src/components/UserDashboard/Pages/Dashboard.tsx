@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight, FileText, Upload, Loader2 } from "lucide-react";
 import StatusBadge from "../dashboard/StatusBadge";
 import LawyerInfo from "../dashboard/LawyerInfo";
-import DocumentList from "../dashboard/DocumentList";
+ 
 import API from "../../../../api/axios";
 import DocumentViewer from "../dashboard/DocumentViewer";
 
@@ -89,7 +89,7 @@ const Dashboard = () => {
               View and manage your ongoing legal cases. Upload documents, track progress, and communicate with your legal team.
             </p>
           </div>
-          <Button className="bg-blue-400 hover:bg-blue-500 cursor-pointer">
+          <Button className="bg-blue-400 hover:bg-blue-500 ">
             + New Case
           </Button>
         </div>
@@ -135,7 +135,7 @@ const Dashboard = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-blue-500 border-blue-200/20 cursor-pointer"
+                        className="text-blue-500 border-blue-200/20"
                         onClick={() => handleViewDetails(caseItem.id)}
                       >
                         View Details <ChevronRight className="ml-1 h-4 w-4" />
@@ -152,7 +152,7 @@ const Dashboard = () => {
               <Button
                 variant="ghost"
                 size="lg"
-                className="text-blue-600 hover:bg-slate-100 hover:text-blue-700 cursor-pointer"
+                className="text-blue-600 hover:bg-slate-100 hover:text-blue-700 "
                 onClick={() => setSelectedCase(null)}
               >
                 <ChevronRight className="h-6 w-6 rotate-180 mr-1" /> Back
