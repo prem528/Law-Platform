@@ -141,11 +141,27 @@ const getMyCases = async (req, res) => {
   };
   
 
+  const allCaseDocuments =  async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const documents = await prisma.document.findMany({
+        where: {
+          uploadedById: userId,
+        },
+        orderBy: { createdAt: "desc" },
+      });
+      res.json(documents);
+    } catch (err) {
+      res.status(500).json({ message: "Failed to fetch documents" });
+    }
+  }
+
   module.exports = {
     submitCase,
     getMyCases,
     getSingleCase,
     uploadDocument,
-    getCaseDocuments
+    getCaseDocuments,
+    allCaseDocuments
   };
   

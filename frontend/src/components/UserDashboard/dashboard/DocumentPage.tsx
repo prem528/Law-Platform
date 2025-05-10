@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
-
 import { useToast } from "@/hooks/use-toast";
 import DocumentUpload from "./DocumentUpload";
+import API from "../../../../api/axios";
 
 interface Document {
   id: string;
@@ -17,37 +17,39 @@ const Documents = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
-  
-  // Mock function to simulate fetching documents
-  const fetchDocuments = () => {
-    setLoading(true);
-    // In a real app, this would be an API call
-    setTimeout(() => {
-      // Sample documents
-      const mockDocuments = [
-        { id: "doc1", filename: "Insurance Policy.pdf", fileUrl: "documents/policy.pdf" },
-        { id: "doc2", filename: "Medical Records.pdf", fileUrl: "documents/medical.pdf" },
-        { id: "doc3", filename: "Accident Photos.zip", fileUrl: "documents/photos.zip" }
-      ];
-      setDocuments(mockDocuments);
-      setLoading(false);
-    }, 1000);
-  };
 
-  // Initial load of documents
   useEffect(() => {
+    const fetchDocuments = async () => {
+      setLoading(true);
+      try {
+        const res = await API.get<Document[]>("/cases/documents/mine");
+        setDocuments(res.data);
+      } catch (error) {
+        console.log("Failed to fetch documents", error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchDocuments();
   }, []);
+  
+  
 
   // Handle document upload completion
-  const handleUploadComplete = () => {
+  const handleUploadComplete = async () => {
     toast({
       title: "Upload complete",
       description: "Your document has been uploaded successfully.",
     });
-    fetchDocuments(); // Refresh the document list
+  
+    try {
+        const res = await API.get<Document[]>("/cases/documents/mine");
+      setDocuments(res.data);
+    } catch (error) {
+      console.log("Failed to refresh documents", error);
+    }
   };
-
+  
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-6xl mx-auto px-4 py-10">
@@ -95,7 +97,7 @@ const Documents = () => {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  onClick={fetchDocuments}
+                  onClick={handleUploadComplete}
                   className="text-blue-400 border-blue-200 hover:border-blue-400 hover:bg-blue-50 "
                   disabled={loading}
                 >

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight, FileText, Upload, Loader2 } from "lucide-react";
 import StatusBadge from "../dashboard/StatusBadge";
 import LawyerInfo from "../dashboard/LawyerInfo";
- 
+
 import API from "../../../../api/axios";
 import DocumentViewer from "../dashboard/DocumentViewer";
 
@@ -124,7 +124,12 @@ const Dashboard = () => {
                     </div>
 
                     <div className="bg-gray-50 p-3 rounded-md">
-                      <p className="text-sm text-gray-700">{caseItem.description}</p>
+                      <p className="text-sm text-gray-700">
+                        {caseItem.description.length > 120
+                          ? `${caseItem.description.slice(0, 120)}...`
+                          : caseItem.description}
+                      </p>
+
                     </div>
 
                     <div className="mt-2">

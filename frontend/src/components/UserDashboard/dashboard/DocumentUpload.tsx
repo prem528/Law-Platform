@@ -60,7 +60,7 @@ const DocumentUpload = ({ caseId, onUploadComplete }: DocumentUploadProps) => {
         />
         <label
           htmlFor="file-upload"
-          className={`flex items-center gap-2  bg-blue-200 hover:bg-legal-primary/90 text-black px-4 py-2 rounded-md transition-colors ${
+          className={`flex items-center gap-2 cursor-pointer  bg-blue-200 hover:bg-legal-primary/90 text-black px-4 py-2 rounded-md transition-colors ${
             uploading ? "opacity-50 pointer-events-none" : ""
           }`}
         >
