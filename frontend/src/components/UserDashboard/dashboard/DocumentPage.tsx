@@ -97,9 +97,9 @@ const Documents = () => {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  onClick={handleUploadComplete}
+                 
                   className="text-blue-400 border-blue-200 hover:border-blue-400 hover:bg-blue-50 "
-                  disabled={loading}
+                   
                 >
                   Refresh
                 </Button>
