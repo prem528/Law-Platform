@@ -11,6 +11,7 @@ import Notifications from "./components/UserDashboard/Pages/Notifications";
 import NotFound from "./components/UserDashboard/Pages/NotFound";
 import { SidebarProvider } from "@/contexts/SidebarContext";
 import DocumentPage from "./components/UserDashboard/dashboard/DocumentPage";
+import CaseForm from "./components/UserDashboard/dashboard/CaseForm";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
               <Route path="/submitcase" element={<SubmitCase />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/docs" element={<DocumentPage />} />
+              <Route path="/form" element={<CaseForm/>}/>
             </Route>
 
             {/* 404 route */}

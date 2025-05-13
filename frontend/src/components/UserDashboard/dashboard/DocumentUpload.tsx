@@ -2,6 +2,7 @@ import { useState } from "react";
  
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { uploadCaseDocument } from "../../../../api/upLoadDocument";
 
 interface DocumentUploadProps {
   caseId: string;
@@ -17,34 +18,30 @@ const DocumentUpload = ({ caseId, onUploadComplete }: DocumentUploadProps) => {
     if (!files || files.length === 0) return;
 
     setUploading(true);
-    
-    // In a real app, you would upload these files to your backend
-    // For this demo, we'll simulate a successful upload
+
+    const formData = new FormData();
+    formData.append("file", files[0]);
+
     try {
-      // Simulate upload delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Success message
+      await uploadCaseDocument({ caseId, file: files[0] });
+    
       toast({
         title: "Document uploaded",
-        description: `Successfully uploaded ${files.length} document(s)`,
+        description: `Successfully uploaded ${files[0].name}`,
       });
-      
-      // Notify parent component that upload is complete
+    
       if (onUploadComplete) {
-        onUploadComplete();
+        onUploadComplete(); // Refresh parent state
       }
     } catch (error) {
+      console.error("Upload failed:", error);
       toast({
         title: "Upload failed",
         description: "There was an error uploading your document",
         variant: "destructive",
       });
-    } finally {
-      setUploading(false);
-      // Reset the input
-      e.target.value = '';
     }
+    
   };
 
   return (

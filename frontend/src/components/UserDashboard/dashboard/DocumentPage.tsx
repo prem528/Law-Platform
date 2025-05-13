@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
-import DocumentUpload from "./DocumentUpload";
+ 
 import API from "../../../../api/axios";
 
 interface Document {
@@ -16,7 +15,7 @@ interface Document {
 const Documents = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
+ 
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -36,19 +35,19 @@ const Documents = () => {
   
 
   // Handle document upload completion
-  const handleUploadComplete = async () => {
-    toast({
-      title: "Upload complete",
-      description: "Your document has been uploaded successfully.",
-    });
+  // const handleUploadComplete = async () => {
+  //   toast({
+  //     title: "Upload complete",
+  //     description: "Your document has been uploaded successfully.",
+  //   });
   
-    try {
-        const res = await API.get<Document[]>("/cases/documents/mine");
-      setDocuments(res.data);
-    } catch (error) {
-      console.log("Failed to refresh documents", error);
-    }
-  };
+  //   try {
+  //       const res = await API.get<Document[]>("/cases/documents/mine");
+  //     setDocuments(res.data);
+  //   } catch (error) {
+  //     console.log("Failed to refresh documents", error);
+  //   }
+  // };
   
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white">
@@ -70,24 +69,8 @@ const Documents = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1">
-            <Card className="border-0 shadow-md overflow-hidden h-full">
-              <div className="h-4 bg-blue-200 w-full"></div>
-              <CardHeader className="border-b">
-                <CardTitle className="text-lg">Upload Documents</CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                <p className="text-sm text-gray-600 mb-4">
-                  Upload documents related to your legal cases. We support various file formats including PDF, DOC, DOCX, JPG, PNG.
-                </p>
-                <DocumentUpload
-                  caseId="all"
-                  onUploadComplete={handleUploadComplete}
-                />
-              </CardContent>
-            </Card>
-          </div>
+        <div className="">
+   
 
           <div className="lg:col-span-2">
             <Card className="border-0 shadow-md overflow-hidden">

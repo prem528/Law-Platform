@@ -7,6 +7,7 @@ import LawyerInfo from "../dashboard/LawyerInfo";
 
 import API from "../../../../api/axios";
 import DocumentViewer from "../dashboard/DocumentViewer";
+import { Link } from "react-router-dom";
 
 interface Lawyer {
   name: string;
@@ -89,9 +90,13 @@ const Dashboard = () => {
               View and manage your ongoing legal cases. Upload documents, track progress, and communicate with your legal team.
             </p>
           </div>
+          
+          <Link to='/form'>
           <Button className="bg-blue-400 hover:bg-blue-500 ">
             + New Case
           </Button>
+          </Link>
+          
         </div>
 
         {loading ? (
