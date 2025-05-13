@@ -85,32 +85,24 @@ const getMyCases = async (req, res) => {
   };
   
 
-
 // -----------uploadDocuments Controller logic-------------------
 const uploadDocument = async (req, res) => {
-  const { caseId } = req.params;
-  const file = req.file;
-
-  if (!file) return res.status(400).json({ message: "No file uploaded" });
-
   try {
-    const fileUrl = file.location; // multer-s3 automatically adds this
     const newDoc = await prisma.document.create({
       data: {
-        filename: file.originalname,
-        fileUrl,
-        caseId,
+        filename: req.file.originalname,
+        fileUrl: req.uploadedFileUrl, // populated by uploadToR2 middleware
+        caseId: req.params.caseId,
         uploadedById: req.user.id,
       },
     });
 
     res.status(201).json({ message: "Document uploaded", document: newDoc });
-  } catch (error) {
-    console.error("Upload error:", error);
+  } catch (err) {
+    console.error("Upload error:", err);
     res.status(500).json({ message: "Failed to upload document" });
   }
 };
-
 
 
   //-------------------View Case Documents----------------------

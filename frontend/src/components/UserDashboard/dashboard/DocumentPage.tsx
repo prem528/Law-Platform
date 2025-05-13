@@ -117,7 +117,7 @@ const Documents = () => {
                     {documents.map((doc) => (
                       <a
                         key={doc.id}
-                        href={`http://localhost:5000/${doc.fileUrl}`}
+                        href={`${doc.fileUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center p-2.5 rounded-md hover:bg-gray-50 border border-gray-100 transition-colors group"

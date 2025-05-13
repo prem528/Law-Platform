@@ -1,4 +1,3 @@
-// middlewares/uploadToR2.js
 const multer = require("multer");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const path = require("path");
@@ -30,6 +29,7 @@ const uploadToR2 = async (req, res, next) => {
     Key: uniqueFileName,
     Body: file.buffer,
     ContentType: file.mimetype,
+    ACL: "public-read", // 👈 important for public access
   };
 
   try {
