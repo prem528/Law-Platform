@@ -34,7 +34,7 @@ const uploadToR2 = async (req, res, next) => {
 
   try {
     await s3.send(new PutObjectCommand(params));
-    req.uploadedFileUrl = `${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/${uniqueFileName}`;
+    req.uploadedFileUrl = `${process.env.R2_PUBLIC_URL}/${uniqueFileName}`;
     next();
   } catch (err) {
     console.error("Cloudflare R2 upload failed:", err);

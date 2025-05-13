@@ -13,3 +13,28 @@ API.interceptors.request.use((config) => {
 
 export default API;
 
+
+//uploadDocument.ts
+export const uploadCaseDocument = async ({
+  caseId,
+  file,
+}: {
+  caseId: string;
+  file: File;
+}) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await axios.post(
+    `http://localhost:5000/api/cases/${caseId}/documents`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+
+  return response.data;
+};
