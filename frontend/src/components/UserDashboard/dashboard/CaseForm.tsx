@@ -9,31 +9,36 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-
 import DocumentUpload from "./DocumentUpload";
 import { Checkbox } from "@/components/ui/checkbox";
+import API from "../../../../api/axios";
  
+
 
 const formSchema = z.object({
   title: z.string().min(5, {
     message: "Case title must be at least 5 characters.",
   }),
+  type: z.string().min(5, {
+    message: "Case title must be at least 5 characters.",
+  }),
   description: z.string().min(20, {
     message: "Description must be at least 20 characters.",
   }),
-  firstName: z.string().min(2, {
-    message: "First name must be at least 2 characters.",
-  }),
-  lastName: z.string().min(2, {
-    message: "Last name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  phone: z.string().min(10, {
-    message: "Please enter a valid phone number.",
-  }),
-  address: z.string().optional(),
+
+//   firstName: z.string().min(2, {
+//     message: "First name must be at least 2 characters.",
+//   }),
+//   lastName: z.string().min(2, {
+//     message: "Last name must be at least 2 characters.",
+//   }),
+//   email: z.string().email({
+//     message: "Please enter a valid email address.",
+//   }),
+//   phone: z.string().min(10, {
+//     message: "Please enter a valid phone number.",
+//   }),
+//   address: z.string().optional(),
   agreeTos: z.boolean().refine((val) => val === true, {
     message: "You must agree to the terms and conditions.",
   }),
@@ -41,9 +46,12 @@ const formSchema = z.object({
 
 const CaseForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [caseId, setCaseId] = useState<string | null>(null);
+  const [caseId, _setCaseId] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
+
+
+  
 
   // Initialize form
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,11 +59,7 @@ const CaseForm = () => {
     defaultValues: {
       title: "",
       description: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      address: "",
+      type: "",
       agreeTos: false,
     },
   });
@@ -64,25 +68,25 @@ const CaseForm = () => {
     setIsSubmitting(true);
     
     try {
-      // In a real app, you would submit this data to your backend
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Generate a mock case ID
-      const newCaseId = `CASE-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
-      setCaseId(newCaseId);
-      
+
+      const res = await API.post<{ case: { title: string } }>("/cases/submit", values);
+
       toast({
-        title: "Case submitted successfully",
-        description: `Your case reference number is ${newCaseId}`,
+        title: "Case Submitted",
+        description: `Your case '${res.data.case.title}' has been successfully submitted.`,
       });
+
+      form.reset();
+ 
       
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "There was an error submitting your case.",
-        variant: "destructive",
-      });
+        console.error("Case submission failed", error);
+        toast({
+            title: "Submission Failed",
+            description: "Something went wrong. Please try again.",
+            variant: "destructive",
+          });
     } finally {
       setIsSubmitting(false);
     }
@@ -93,19 +97,19 @@ const CaseForm = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4">
       <Button 
         variant="ghost" 
         onClick={handleGoHome} 
-        className="mb-6 text-legal-secondary hover:text-legal-primary"
+        className="mb-6 text-white bg-blue-400 hover:text-black hover:bg-blue-500" 
       >
         ← Back to Dashboard
       </Button>
       
-      <Card className="border-0 shadow-lg overflow-hidden">
-        <div className="h-2 bg-legal-primary w-full"></div>
+      <Card className="border-0 shadow-lg overflow-hidden pb-8">
+        <div className="h-2 bg-legal-primary w-full "></div>
         <CardHeader>
-          <CardTitle className="text-2xl text-legal-primary">Submit a New Case</CardTitle>
+          <CardTitle className="text-2xl text-blue-900">Submit a New Case</CardTitle>
           <CardDescription>
             Please provide all the details about your case and upload any relevant documents.
           </CardDescription>
@@ -115,7 +119,7 @@ const CaseForm = () => {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="space-y-4">
-                  <h2 className="text-lg font-medium">Case Details</h2>
+                  {/* <h2 className="text-lg font-medium">Case Details</h2> */}
                   
                   <FormField
                     control={form.control}
@@ -128,6 +132,24 @@ const CaseForm = () => {
                         </FormControl>
                         <FormDescription>
                           A brief title describing your legal matter.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  
+                  <FormField
+                    control={form.control}
+                    name="type"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Type of Case</FormLabel>
+                        <FormControl>
+                          <Input placeholder="e.g. Property Dispute" {...field} />
+                        </FormControl>
+                        <FormDescription>
+                          Give proper case title.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -156,7 +178,7 @@ const CaseForm = () => {
                   />
                 </div>
 
-                <div className="space-y-4">
+                {/* <div className="space-y-6">
                   <h2 className="text-lg font-medium">Personal Information</h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -232,7 +254,7 @@ const CaseForm = () => {
                       </FormItem>
                     )}
                   />
-                </div>
+                </div> */}
 
                 <div className="space-y-4">
                   <h2 className="text-lg font-medium">Documentation</h2>
@@ -276,7 +298,7 @@ const CaseForm = () => {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-legal-primary hover:bg-legal-primary/90"
+                  className="w-full bg-blue-500 hover:bg-legal-primary/90"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Submitting..." : "Submit Case"}
@@ -299,7 +321,7 @@ const CaseForm = () => {
               <div className="pt-4">
                 <Button
                   onClick={handleGoHome}
-                  className="bg-legal-secondary hover:bg-legal-secondary/90"
+                  className="bg-blue-400 hover:bg-blue-500"
                 >
                   Return to Dashboard
                 </Button>
