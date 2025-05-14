@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, FileText, Loader2 } from "lucide-react";
+import { FileText, Loader2 } from "lucide-react";
 // import { Link } from "react-router-dom";
 
 import API from "../../../../api/axios";
@@ -35,15 +35,15 @@ const Documents = () => {
 
 
   return (
-    <div className=" px-4">
-        <div className="flex justify-between items-center mb-10">
-          <div>
-            <h1 className="text-3xl font-bold text-legal-primary">Document Management</h1>
-            <p className="text-gray-600 mt-2 max-w-xl">
-              Upload, manage and organize your case documents in one place.
-            </p>
-          </div>
-          {/* <Link to="/dashboard">
+    <div className="px-24">
+      <div className="flex justify-between items-center mb-10">
+        <div>
+          <h1 className="text-3xl font-bold text-legal-primary">Document Management</h1>
+          <p className="text-gray-600 mt-2 max-w-xl">
+            Upload, manage and organize your case documents in one place.
+          </p>
+        </div>
+        {/* <Link to="/dashboard">
             <Button
               variant="outline"
               className="text-legal-secondary border-legal-secondary/20 hover:border-legal-secondary/50"
@@ -51,63 +51,62 @@ const Documents = () => {
               Back to Dashboard <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
           </Link> */}
-        </div>
+      </div>
 
-        <div className="">
-          <div className="lg:col-span-2">
-            <Card className="border-0 shadow-md overflow-hidden">
-              <div className="h-4 bg-blue-200 w-full"></div>
-              <CardHeader className="border-b flex flex-row items-center justify-between py-4">
-                <CardTitle className="text-lg font-medium">My Documents</CardTitle>
-                <Button
-                  variant="outline"
-                  size="lg"
-
-                  className="text-blue-400 border-blue-200 hover:border-blue-400 hover:bg-blue-50 "
-
-                >
-                  Refresh
-                </Button>
-              </CardHeader>
-              <CardContent className="p-4">
-                {loading ? (
-                  <div className="flex flex-col items-center justify-center h-64 space-y-4">
-                    <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
-                    <p className="text-gray-500">Loading your Documents...</p>
-                  </div>
-                ) : documents.length > 0 ? (
-                  <div className="space-y-2">
-                    {documents.map((doc) => (
+      <div className="">
+        <div className="lg:col-span-2">
+          <Card className="border-0 shadow-md overflow-hidden">
+            <div className="h-4 bg-blue-200 w-full"></div>
+            <CardHeader className="border-b flex flex-row items-center justify-between py-4">
+              <CardTitle className="text-lg font-medium">My Documents</CardTitle>
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-blue-400 border-blue-200 hover:border-blue-400 hover:bg-blue-50 "
+              >
+                Refresh
+              </Button>
+            </CardHeader>
+            <CardContent className="p-4">
+              {loading ? (
+                <div className="flex flex-col items-center justify-center h-64 space-y-4">
+                  <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
+                  <p className="text-gray-500">Loading your Documents...</p>
+                </div>
+              ) : documents.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {documents.map((doc) => (
+                    <Card key={doc.id} className="shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
                       <a
-                        key={doc.id}
-                        href={`${doc.fileUrl}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center p-2.5 rounded-md hover:bg-gray-50 border border-gray-100 transition-colors group"
+                        href={doc.fileUrl}
+                        
+                       
+                        className="text-sm text-blue-600 hover:border-blue-200"
                       >
-                        <div className="p-1.5 bg-blue-50 rounded-md group-hover:bg-blue-100 transition-colors">
-                          <FileText className="h-4 w-4 text-legal-secondary" />
-                        </div>
-                        <div className="ml-2 flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">{doc.filename}</p>
-                          <p className="text-xs text-gray-500">Click to view</p>
-                        </div>
-                        <ChevronRight className="h-3.5 w-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <FileText className="text-blue-500 w-8 h-8" />
+                          </div>
+                          <p className="text-sm font-medium text-gray-800 truncate">{doc.filename}</p>
+                          <p className="text-xs text-gray-500 mt-1">Uploaded document</p>
+                        </CardContent>
                       </a>
-                    ))}
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex items-center justify-center py-5 border border-dashed border-gray-300 rounded-md bg-gray-50">
+                  <div className="text-center">
+                    <FileText className="h-7 w-7 mx-auto text-gray-400 mb-2" />
+                    <p className="text-sm text-gray-500">No documents uploaded</p>
                   </div>
-                ) : (
-                  <div className="flex items-center justify-center py-5 border border-dashed border-gray-300 rounded-md bg-gray-50">
-                    <div className="text-center">
-                      <FileText className="h-7 w-7 mx-auto text-gray-400 mb-2" />
-                      <p className="text-sm text-gray-500">No documents uploaded</p>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
+                </div>
+              )}
+            </CardContent>
+
+          </Card>
         </div>
+      </div>
     </div>
   );
 };
