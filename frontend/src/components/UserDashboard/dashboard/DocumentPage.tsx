@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
- 
+import { ChevronRight, FileText, Loader2 } from "lucide-react";
+// import { Link } from "react-router-dom";
+
 import API from "../../../../api/axios";
 
 interface Document {
@@ -15,7 +15,7 @@ interface Document {
 const Documents = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(false);
- 
+
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -31,27 +31,11 @@ const Documents = () => {
     };
     fetchDocuments();
   }, []);
-  
-  
 
-  // Handle document upload completion
-  // const handleUploadComplete = async () => {
-  //   toast({
-  //     title: "Upload complete",
-  //     description: "Your document has been uploaded successfully.",
-  //   });
-  
-  //   try {
-  //       const res = await API.get<Document[]>("/cases/documents/mine");
-  //     setDocuments(res.data);
-  //   } catch (error) {
-  //     console.log("Failed to refresh documents", error);
-  //   }
-  // };
-  
+
+
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className=" px-4">
         <div className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-3xl font-bold text-legal-primary">Document Management</h1>
@@ -59,41 +43,37 @@ const Documents = () => {
               Upload, manage and organize your case documents in one place.
             </p>
           </div>
-          <Link to="/dashboard">
-            <Button 
+          {/* <Link to="/dashboard">
+            <Button
               variant="outline"
               className="text-legal-secondary border-legal-secondary/20 hover:border-legal-secondary/50"
             >
               Back to Dashboard <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
-          </Link>
+          </Link> */}
         </div>
 
         <div className="">
-   
-
           <div className="lg:col-span-2">
             <Card className="border-0 shadow-md overflow-hidden">
               <div className="h-4 bg-blue-200 w-full"></div>
               <CardHeader className="border-b flex flex-row items-center justify-between py-4">
                 <CardTitle className="text-lg font-medium">My Documents</CardTitle>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                 
+                <Button
+                  variant="outline"
+                  size="lg"
+
                   className="text-blue-400 border-blue-200 hover:border-blue-400 hover:bg-blue-50 "
-                   
+
                 >
                   Refresh
                 </Button>
               </CardHeader>
               <CardContent className="p-4">
                 {loading ? (
-                  <div className="flex justify-center items-center h-64">
-                    <div className="animate-pulse-soft">
-                      <div className="h-8 w-32 bg-gray-200 rounded mb-4"></div>
-                      <div className="h-32 bg-gray-100 rounded-lg w-full"></div>
-                    </div>
+                  <div className="flex flex-col items-center justify-center h-64 space-y-4">
+                    <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
+                    <p className="text-gray-500">Loading your Documents...</p>
                   </div>
                 ) : documents.length > 0 ? (
                   <div className="space-y-2">
@@ -128,7 +108,6 @@ const Documents = () => {
             </Card>
           </div>
         </div>
-      </div>
     </div>
   );
 };

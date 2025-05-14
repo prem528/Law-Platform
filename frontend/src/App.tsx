@@ -5,8 +5,6 @@ import { Toaster } from "./components/ui/toaster";
 import { Toaster as SonnerToaster } from "sonner";
 import AppLayout from "./components/UserDashboard/layout/AppLayout";
 import Dashboard from "./components/UserDashboard/Pages/Dashboard";
-
-import SubmitCase from "./components/UserDashboard/Pages/SubmitCase";
 import Notifications from "./components/UserDashboard/Pages/Notifications";
 import NotFound from "./components/UserDashboard/Pages/NotFound";
 import { SidebarProvider } from "@/contexts/SidebarContext";
@@ -26,8 +24,6 @@ const App = () => (
             {/* Parent route with layout */}
             <Route element={<AppLayoutWrapper />}>
               <Route path="/dashboard" element={<Dashboard />} />
-
-              <Route path="/submitcase" element={<SubmitCase />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/docs" element={<DocumentPage />} />
               <Route path="/form" element={<CaseForm/>}/>

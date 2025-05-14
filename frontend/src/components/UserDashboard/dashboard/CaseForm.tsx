@@ -9,9 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-
 import { Checkbox } from "@/components/ui/checkbox";
 import API from "../../../../api/axios";
+import { ChevronLeft } from "lucide-react";
 
 
 interface SubmitCaseResponse {
@@ -20,7 +20,6 @@ interface SubmitCaseResponse {
     title: string;
     type: string;
     description: string;
-    // include other fields if needed
   };
   message: string;
 }
@@ -49,8 +48,6 @@ const CaseForm = () => {
 
   const { toast } = useToast();
   const navigate = useNavigate();
-
-
 
 
   // Initialize form
@@ -108,17 +105,18 @@ const CaseForm = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4">
+    <div className="lg:max-w-3xl lg:mx-auto lg:px-4">
       <Button
         variant="ghost"
         onClick={handleGoHome}
-        className="mb-6 text-white bg-blue-400 hover:text-black hover:bg-blue-500"
+        className="mb-6 text-white bg-blue-400 hover:text-white hover:bg-blue-500"
       >
-        ← Back to Dashboard
+        <ChevronLeft className=" h-4 w-4"/>
+        Back to Dashboard
       </Button>
 
       <Card className="border-0 shadow-lg overflow-hidden pb-8">
-        <div className="h-2 bg-legal-primary w-full "></div>
+        <div className="h-4 bg-blue-200 w-full "></div>
         <CardHeader>
           <CardTitle className="text-2xl text-blue-900">Submit a New Case</CardTitle>
           <CardDescription>
@@ -188,93 +186,16 @@ const CaseForm = () => {
                   />
                 </div>
 
-                {/* <div className="space-y-6">
-                  <h2 className="text-lg font-medium">Personal Information</h2>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="firstName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>First Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="John" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="lastName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Last Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Doe" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input type="email" placeholder="john.doe@example.com" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Phone Number</FormLabel>
-                          <FormControl>
-                            <Input type="tel" placeholder="(123) 456-7890" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="address"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Address (Optional)</FormLabel>
-                        <FormControl>
-                          <Input placeholder="123 Main St, Anytown, ST 12345" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div> */}
-
-                <div className="space-y-4">
+                <div className="space-y-2">
                   <h2 className="text-lg font-medium">Documentation</h2>
                   <div className="bg-gray-50 rounded-md p-4 border border-gray-100">
                     <p className="text-sm text-gray-700 mb-3">
                       Please upload any relevant documents that will help us understand your case better.
                     </p>
-                    {/* We'll use a placeholder caseId until we've submitted the form */}
+
+                     {/* Documents Attachments */}
                     <div className="space-y-2">
-                      <FormLabel>Attach a Document (optional)</FormLabel>
+                      <FormLabel>Attach a Document</FormLabel>
                       <input
                         type="file"
                         onChange={(e) => {
@@ -282,11 +203,10 @@ const CaseForm = () => {
                             setSelectedFile(e.target.files[0]);
                           }
                         }}
-                        className="block w-full text-sm text-gray-500 file:border file:border-gray-200 file:px-3 file:py-1 file:mr-3 file:rounded file:bg-blue-50"
+                        className="block w-full text-sm text-gray-700 file:border file:border-gray-500 file:px-4 file:py-1 file:mr-3 file:rounded file:bg-blue-200"
                         accept=".pdf,.doc,.docx,.jpg,.png"
                       />
                     </div>
-
                   </div>
                 </div>
 

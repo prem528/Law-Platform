@@ -79,7 +79,7 @@ const Dashboard = () => {
 
 
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white">
+    <div className="">
       <div className="max-w-6xl mx-auto px-4 py-2">
         <div className="flex justify-between items-center mb-10">
           <div>

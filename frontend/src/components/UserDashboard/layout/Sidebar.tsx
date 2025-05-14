@@ -14,7 +14,7 @@ import { useSidebar } from '@/contexts/SidebarContext';
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Documents', href: '/docs', icon: FileText },
-  { name: 'Submit a Case', href: '/submitcase', icon: FilePlus2 },
+  { name: 'Submit a Case', href: '/form', icon: FilePlus2 },
   { name: 'Notifications', href: '/notifications', icon: BellRing },
 ];
 
