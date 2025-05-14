@@ -35,7 +35,7 @@ const Documents = () => {
 
 
   return (
-    <div className="px-24">
+    <div className="lg:px-24">
       <div className="flex justify-between items-center mb-10">
         <div>
           <h1 className="text-3xl font-bold text-legal-primary">Document Management</h1>
@@ -74,14 +74,12 @@ const Documents = () => {
                   <p className="text-gray-500">Loading your Documents...</p>
                 </div>
               ) : documents.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   {documents.map((doc) => (
-                    <Card key={doc.id} className="shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+                    <Card key={doc.id} className="shadow-sm  hover:shadow-md transition duration-300">
                       <a
                         href={doc.fileUrl}
-                        
-                       
-                        className="text-sm text-blue-600 hover:border-blue-200"
+                        className="text-sm text-blue-600 border hover:border-blue-400 rounded-lg"
                       >
                         <CardContent className="p-4">
                           <div className="flex items-center justify-between mb-2">

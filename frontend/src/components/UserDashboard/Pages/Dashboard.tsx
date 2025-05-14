@@ -134,7 +134,6 @@ const Dashboard = () => {
                           ? `${caseItem.description.slice(0, 120)}...`
                           : caseItem.description}
                       </p>
-
                     </div>
 
                     <div className="mt-2">
@@ -162,7 +161,7 @@ const Dashboard = () => {
               <Button
                 variant="ghost"
                 size="lg"
-                className="text-blue-600 hover:bg-slate-100 hover:text-blue-700 "
+                className="text-blue-600 hover:bg-slate-100 hover:text-blue-700 border border-gray-100 hover:border-blue-200 "
                 onClick={() => setSelectedCase(null)}
               >
                 <ChevronRight className="h-6 w-6 rotate-180 mr-1" /> Back
