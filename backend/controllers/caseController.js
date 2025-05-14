@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 const submitCase = async (req, res) => {
   const { title, type, description } = req.body;
+  const file = req.file;
 
   try {
     const newCase = await prisma.case.create({
@@ -13,8 +14,20 @@ const submitCase = async (req, res) => {
         title,
         type,
         description,
-        userId: req.user.id, // from JWT
+        userId: req.user.id,
+        documents: file
+          ? {
+              create: [
+                {
+                  filename: file.originalname,
+                  fileUrl: req.uploadedFileUrl,
+                  uploadedById: req.user.id,
+                },
+              ],
+            }
+          : undefined,
       },
+      include: { documents: true },
     });
 
     res.status(201).json({ message: "Case submitted", case: newCase });
@@ -23,8 +36,6 @@ const submitCase = async (req, res) => {
     res.status(500).json({ message: "Failed to submit case" });
   }
 };
-
-
 
 //----------------GetMyCases Controller logic-----------------
 

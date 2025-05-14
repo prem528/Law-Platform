@@ -9,10 +9,21 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import DocumentUpload from "./DocumentUpload";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import API from "../../../../api/axios";
- 
+
+
+interface SubmitCaseResponse {
+  case: {
+    id: string;
+    title: string;
+    type: string;
+    description: string;
+    // include other fields if needed
+  };
+  message: string;
+}
 
 
 const formSchema = z.object({
@@ -26,19 +37,6 @@ const formSchema = z.object({
     message: "Description must be at least 20 characters.",
   }),
 
-//   firstName: z.string().min(2, {
-//     message: "First name must be at least 2 characters.",
-//   }),
-//   lastName: z.string().min(2, {
-//     message: "Last name must be at least 2 characters.",
-//   }),
-//   email: z.string().email({
-//     message: "Please enter a valid email address.",
-//   }),
-//   phone: z.string().min(10, {
-//     message: "Please enter a valid phone number.",
-//   }),
-//   address: z.string().optional(),
   agreeTos: z.boolean().refine((val) => val === true, {
     message: "You must agree to the terms and conditions.",
   }),
@@ -46,12 +44,14 @@ const formSchema = z.object({
 
 const CaseForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [caseId, _setCaseId] = useState<string | null>(null);
+  const [caseId, setCaseId] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const { toast } = useToast();
   const navigate = useNavigate();
 
 
-  
+
 
   // Initialize form
   const form = useForm<z.infer<typeof formSchema>>({
@@ -66,31 +66,42 @@ const CaseForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
-    
+  
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      const res = await API.post<{ case: { title: string } }>("/cases/submit", values);
-
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("type", values.type);
+      formData.append("description", values.description);
+      if (selectedFile) {
+        formData.append("file", selectedFile);
+      }
+  
+      const res = await API.post<SubmitCaseResponse>("/cases/submit", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
       toast({
         title: "Case Submitted",
         description: `Your case '${res.data.case.title}' has been successfully submitted.`,
       });
-
+  
+      setCaseId(res.data.case.id); // For confirmation message
       form.reset();
- 
-      
+      setSelectedFile(null);
     } catch (error) {
-        console.error("Case submission failed", error);
-        toast({
-            title: "Submission Failed",
-            description: "Something went wrong. Please try again.",
-            variant: "destructive",
-          });
+      console.error("Case submission failed", error);
+      toast({
+        title: "Submission Failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
+  
 
   const handleGoHome = () => {
     navigate('/dashboard');
@@ -98,14 +109,14 @@ const CaseForm = () => {
 
   return (
     <div className="max-w-3xl mx-auto px-4">
-      <Button 
-        variant="ghost" 
-        onClick={handleGoHome} 
-        className="mb-6 text-white bg-blue-400 hover:text-black hover:bg-blue-500" 
+      <Button
+        variant="ghost"
+        onClick={handleGoHome}
+        className="mb-6 text-white bg-blue-400 hover:text-black hover:bg-blue-500"
       >
         ← Back to Dashboard
       </Button>
-      
+
       <Card className="border-0 shadow-lg overflow-hidden pb-8">
         <div className="h-2 bg-legal-primary w-full "></div>
         <CardHeader>
@@ -120,7 +131,7 @@ const CaseForm = () => {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="space-y-4">
                   {/* <h2 className="text-lg font-medium">Case Details</h2> */}
-                  
+
                   <FormField
                     control={form.control}
                     name="title"
@@ -137,8 +148,7 @@ const CaseForm = () => {
                       </FormItem>
                     )}
                   />
-                  
-                  
+
                   <FormField
                     control={form.control}
                     name="type"
@@ -163,10 +173,10 @@ const CaseForm = () => {
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Textarea 
-                            placeholder="Please provide details about your case..." 
-                            className="min-h-[120px]" 
-                            {...field} 
+                          <Textarea
+                            placeholder="Please provide details about your case..."
+                            className="min-h-[120px]"
+                            {...field}
                           />
                         </FormControl>
                         <FormDescription>
@@ -263,15 +273,20 @@ const CaseForm = () => {
                       Please upload any relevant documents that will help us understand your case better.
                     </p>
                     {/* We'll use a placeholder caseId until we've submitted the form */}
-                    <DocumentUpload
-                      caseId="temp-id" 
-                      onUploadComplete={() => {
-                        toast({
-                          title: "Document uploaded",
-                          description: "Your document has been uploaded successfully.",
-                        });
-                      }} 
-                    />
+                    <div className="space-y-2">
+                      <FormLabel>Attach a Document (optional)</FormLabel>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files.length > 0) {
+                            setSelectedFile(e.target.files[0]);
+                          }
+                        }}
+                        className="block w-full text-sm text-gray-500 file:border file:border-gray-200 file:px-3 file:py-1 file:mr-3 file:rounded file:bg-blue-50"
+                        accept=".pdf,.doc,.docx,.jpg,.png"
+                      />
+                    </div>
+
                   </div>
                 </div>
 
@@ -281,9 +296,9 @@ const CaseForm = () => {
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                       <FormControl>
-                        <Checkbox 
-                          checked={field.value} 
-                          onCheckedChange={field.onChange} 
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
@@ -296,8 +311,8 @@ const CaseForm = () => {
                   )}
                 />
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full bg-blue-500 hover:bg-legal-primary/90"
                   disabled={isSubmitting}
                 >
