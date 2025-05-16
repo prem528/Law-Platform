@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 const submitCase = async (req, res) => {
   const { title, type, description } = req.body;
-  const file = req.file;
+  const file = req.file ?? null;
 
   try {
     const newCase = await prisma.case.create({
@@ -20,7 +20,7 @@ const submitCase = async (req, res) => {
               create: [
                 {
                   filename: file.originalname,
-                  fileUrl: req.uploadedFileUrl,
+                  fileUrl: req.uploadedFileUrl || "",
                   uploadedById: req.user.id,
                 },
               ],

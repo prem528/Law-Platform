@@ -3,7 +3,7 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const path = require("path");
 const crypto = require("crypto");
 
-// Use memory storage so the file doesn't save to disk
+// Memory storage: keeps file in memory buffer (not saved to disk)
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -17,11 +17,12 @@ const s3 = new S3Client({
 });
 
 const uploadToR2 = async (req, res, next) => {
-  if (!req.file) {
+  const file = req.file;
+
+  if (!file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
 
-  const file = req.file;
   const uniqueFileName = `${Date.now()}-${crypto.randomBytes(8).toString("hex")}${path.extname(file.originalname)}`;
 
   const params = {
@@ -29,7 +30,7 @@ const uploadToR2 = async (req, res, next) => {
     Key: uniqueFileName,
     Body: file.buffer,
     ContentType: file.mimetype,
-    ACL: "public-read", // 👈 important for public access
+    ACL: "public-read", // Ensure public access to the file
   };
 
   try {
@@ -38,8 +39,16 @@ const uploadToR2 = async (req, res, next) => {
     next();
   } catch (err) {
     console.error("Cloudflare R2 upload failed:", err);
-    res.status(500).json({ message: "Failed to upload to R2" });
+    return res.status(500).json({ message: "Failed to upload to R2" });
   }
 };
 
-module.exports = { upload, uploadToR2 };
+// 👇 Wrapper for optional file uploads (does nothing if no file is present)
+const optionalUploadToR2 = async (req, res, next) => {
+  if (!req.file) {
+    return next(); // continue without error
+  }
+  return uploadToR2(req, res, next);
+};
+
+module.exports = { upload, uploadToR2, optionalUploadToR2 };

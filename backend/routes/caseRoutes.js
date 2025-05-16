@@ -9,12 +9,12 @@ const { submitCase,
     getCaseDocuments,
     allCaseDocuments } = require("../controllers/caseController");
 const { protect } = require("../middlewares/authMiddleware");
-const { upload, uploadToR2 } = require("../middlewares/uploadToR2");
+const { upload, uploadToR2, optionalUploadToR2 } = require("../middlewares/uploadToR2");
 
 const router = express.Router();
 
 // Protected routes
-router.post("/submit", protect, upload.single("file"), uploadToR2, submitCase);
+router.post("/submit", protect, upload.single("file"), optionalUploadToR2, submitCase);
 router.get("/mine", protect, getMyCases);
 router.get("/:id", protect, getSingleCase);
 router.get("/:caseId/documents", protect, getCaseDocuments);
