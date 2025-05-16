@@ -3,6 +3,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { EyeIcon, EyeOffIcon, Mail, Lock } from 'lucide-react';
 import { toast } from "sonner";
+import axios from 'axios';
+
+interface LoginResponse {
+  token: string;
+}
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -32,20 +37,37 @@ const LoginForm: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+  
     if (!validate()) return;
-    
+  
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+  
+    try {
+      const response = await axios.post<LoginResponse>('http://localhost:5000/api/users/login', {
+        email,
+        password
+      });
+  
+      const { token } = response.data;
+  
+      // Store token in localStorage or cookies
+      localStorage.setItem('authToken', token);
+  
       toast.success("Login successful. Welcome back!");
-      // In a real app, you would handle authentication and navigation here
-    }, 1500);
+  
+      // Optionally redirect
+      window.location.href = "/dashboard";
+  
+    } catch (error: any) {
+      console.error("Login error:", error);
+      toast.error(error.response?.data?.message || "Login failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
