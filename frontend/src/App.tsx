@@ -10,7 +10,8 @@ import NotFound from "./components/UserDashboard/Pages/NotFound";
 import { SidebarProvider } from "@/contexts/SidebarContext";
 import DocumentPage from "./components/UserDashboard/dashboard/DocumentPage";
 import CaseForm from "./components/UserDashboard/dashboard/CaseForm";
-import AuthenticationPage from "./components/authentication/AuthenticationPage";
+import Login from "./components/authentication/AuthPage/Login";
+import Register from "./components/authentication/AuthPage/Register";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,9 @@ const App = () => (
             </Route>
 
             {/* Authentication Page */}
-            <Route path="/login" element={<AuthenticationPage/>} />
+            <Route path="/login" element={<Login/>}/> 
+            <Route path="/register" element={<Register/>}/> 
+
 
             {/* 404 route */}
             <Route path="*" element={<NotFound />} />
