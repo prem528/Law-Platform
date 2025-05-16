@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { EyeIcon, EyeOffIcon, Mail, Key } from 'lucide-react';
+import { EyeIcon, EyeOffIcon, Mail, Lock } from 'lucide-react';
 import { toast } from "sonner";
 
 const LoginForm: React.FC = () => {
@@ -48,10 +48,10 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
         <div className="relative">
-          <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+          <Label htmlFor="email" className="text-sm font-medium pb-1">Email</Label>
           <div className="relative">
             <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
             <Input
@@ -69,9 +69,9 @@ const LoginForm: React.FC = () => {
       </div>
       <div className="space-y-2">
         <div className="relative">
-          <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+          <Label htmlFor="password" className="text-sm font-medium pb-1">Password</Label>
           <div className="relative">
-            <Key className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
+            <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
             <Input
               id="password"
               type={showPassword ? 'text' : 'password'}
@@ -105,7 +105,7 @@ const LoginForm: React.FC = () => {
       </div>
       <button
         type="submit"
-        className={`bg-blue-400 rounded-lg py-2 w-full ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+        className={`bg-blue-400 hover:bg-blue-500 text-white cursor-pointer w-full py-2 rounded-md font-semibold ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
         disabled={isLoading}
       >
         {isLoading ? (

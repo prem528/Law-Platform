@@ -4,40 +4,39 @@ import { Scale } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import LoginForm from '../form/LoginForm';
 
+
 const Login = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 bg-hero-pattern">
+<div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="w-full py-4 px-6 md:px-10">
-        <div className="container max-w-7xl mx-auto flex items-center justify-between">
+      <header className="w-full px-6 md:px-10">
+        <div className="container max-w-7xl mx-auto flex items-center justify-between pt-4">
           <div className="flex items-center space-x-2">
             <Scale className="h-8 w-8 text-legal" />
             <h1 className="text-xl md:text-2xl font-bold text-legal">Legal Connect</h1>
           </div>
           <div>
-            <a href="#" className="text-sm text-legal-light hover:text-legal hidden md:inline">Need Help?</a>
+            <a href="#" className="text-sm text-legal-light hover:text-legal hidden md:inline hover:underline">Need Help?</a>
           </div>
         </div>
       </header>
-      
+
       {/* Main Content */}
       <main className="flex-1 flex flex-col md:flex-row py-6 px-4 md:px-10 container max-w-7xl mx-auto">
-        <div className="md:w-1/2 flex flex-col justify-center items-center md:items-start mb-8 md:mb-0 md:pr-10">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-legal mb-4 text-center md:text-left">
-            Welcome Back
-          </h1>
-          <p className="text-lg text-gray-600 mb-6 text-center md:text-left">
-            Log in to your account to access your legal dashboard, documents, and consultations.
-          </p>
-          <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-gray-100 shadow-sm w-full max-w-md">
-            <h3 className="font-medium text-legal">Secure Access</h3>
-            <p className="text-sm text-gray-600">All communication is encrypted and secure</p>
-          </div>
+        {/* Left Side with Image */}
+        <div className="md:w-1/2 flex justify-center items-center mb-8 md:mb-0 md:pr-10">
+          <img
+            src="https://img.freepik.com/free-vector/illustration-people-with-justice-order-icons_53876-77429.jpg"
+            alt="Law and justice illustration"
+            className="w-full h-auto rounded-xl shadow-lg object-cover"
+          />
         </div>
+
+        {/* Right Side with Form */}
         <div className="md:w-1/2 flex justify-center items-center">
-          <Card className="w-full max-w-md mx-auto auth-card-gradient animate-fade-in">
+          <Card className="w-full max-w-md mx-auto auth-card-gradient animate-fade-in py-4">
             <CardHeader className="space-y-1 text-center">
-              <CardTitle className="text-2xl font-bold text-legal">Sign In</CardTitle>
+              <CardTitle className="text-2xl font-bold text-blue-800 ">Sign In</CardTitle>
               <CardDescription>
                 Enter your credentials to access your account
               </CardDescription>
@@ -53,7 +52,7 @@ const Login = () => {
           </Card>
         </div>
       </main>
-      
+
       {/* Footer */}
       <footer className="py-4 px-6 border-t border-gray-200 bg-white/50">
         <div className="container max-w-7xl mx-auto text-center text-sm text-gray-500">
