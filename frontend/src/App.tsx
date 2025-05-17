@@ -12,6 +12,7 @@ import DocumentPage from "./components/UserDashboard/dashboard/DocumentPage";
 import CaseForm from "./components/UserDashboard/dashboard/CaseForm";
 import Login from "./components/authentication/AuthPage/Login";
 import Register from "./components/authentication/AuthPage/Register";
+import PrivateRoute from "./Routes/PrivateRoute";
 
 const queryClient = new QueryClient();
 
@@ -25,10 +26,12 @@ const App = () => (
           <Routes>
             {/* Parent route with layout */}
             <Route element={<AppLayoutWrapper />}>
+            <Route element={<PrivateRoute/>}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/docs" element={<DocumentPage />} />
               <Route path="/form" element={<CaseForm/>}/>
+            </Route>
             </Route>
 
             {/* Authentication Page */}
