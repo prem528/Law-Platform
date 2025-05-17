@@ -4,10 +4,19 @@ import { Label } from '@/components/ui/label';
 import { EyeIcon, EyeOffIcon, Mail, Lock } from 'lucide-react';
 import { toast } from "sonner";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginResponse {
   token: string;
+  message: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+  };
 }
+
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -15,6 +24,8 @@ const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({ email: '', password: '' });
+
+  const navigate = useNavigate();
 
   const validate = () => {
     const newErrors = { email: '', password: '' };
@@ -49,16 +60,21 @@ const LoginForm: React.FC = () => {
         email,
         password
       });
+
+      console.log("Login response:", response.data);
   
-      const { token } = response.data;
+      const { token }  = response.data;
+      console.log("Token received:", token);
+
   
       // Store token in localStorage or cookies
-      localStorage.setItem('authToken', token);
+      localStorage.setItem('token', token);
   
       toast.success("Login successful. Welcome back!");
   
-      // Optionally redirect
-      window.location.href = "/dashboard";
+      // redirect to dashboard
+      navigate("/dashboard");
+
   
     } catch (error: any) {
       console.error("Login error:", error);
