@@ -5,7 +5,7 @@ import RegisterForm from '../form/RegisterForm';
 
 const Register = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="w-full px-6 md:px-10">
         <div className="container max-w-7xl mx-auto flex items-center justify-between pt-4">
@@ -26,7 +26,7 @@ const Register = () => {
           <img
             src="https://img.freepik.com/premium-vector/confident-female-attorney-illustrating-legal-concepts_1263357-36022.jpg"
             alt="Law and justice illustration"
-            className="w-full h-auto rounded-xl shadow-lg object-cover"
+            className="w-full h-auto rounded-xl object-cover"
           />
         </div>
 
