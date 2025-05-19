@@ -4,6 +4,13 @@ import { Label } from '@/components/ui/label';
 import { EyeIcon, EyeOffIcon, Mail, User, Lock } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from "sonner";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+interface RegisterResponse {
+  message: string;
+}
+
 
 const RegisterForm: React.FC = () => {
   const [fullName, setFullName] = useState('');
@@ -21,6 +28,8 @@ const RegisterForm: React.FC = () => {
     confirmPassword: '',
     userType: ''
   });
+
+  const navigate = useNavigate();
 
   const validate = () => {
     const newErrors = {
@@ -67,19 +76,31 @@ const RegisterForm: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+  
     if (!validate()) return;
-    
+  
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
+  
+    try {
+      const res = await axios.post<RegisterResponse>("http://localhost:5000/api/users/register", {
+        name: fullName,
+        email,
+        password,
+        role: userType,
+      });
+  
+      toast.success(res.data.message || "Registration successful!");
+  
+      // Optional: Auto-login or redirect
+      navigate("/login");
+    } catch (error: any) {
+      console.error("Registration error:", error);
+      toast.error(error.response?.data?.message || "Registration failed");
+    } finally {
       setIsLoading(false);
-      toast.success("Registration successful! Welcome to Legal Connect.");
-      // In a real app, you would handle account creation and navigation here
-    }, 1500);
+    }
   };
 
   return (
@@ -128,7 +149,7 @@ const RegisterForm: React.FC = () => {
         <SelectValue placeholder="Select user type" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="client">Client</SelectItem>
+        <SelectItem value="user">Client</SelectItem>
         <SelectItem value="lawyer">Lawyer</SelectItem>
       </SelectContent>
     </Select>

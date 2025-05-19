@@ -1,9 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster } from "./components/ui/toaster";
 import { Toaster as SonnerToaster } from "sonner";
-import AppLayout from "./components/UserDashboard/layout/AppLayout";
 import Dashboard from "./components/UserDashboard/Pages/Dashboard";
 import Notifications from "./components/UserDashboard/Pages/Notifications";
 import NotFound from "./components/UserDashboard/Pages/NotFound";
@@ -13,6 +12,7 @@ import CaseForm from "./components/UserDashboard/dashboard/CaseForm";
 import Login from "./components/authentication/AuthPage/Login";
 import Register from "./components/authentication/AuthPage/Register";
 import PrivateRoute from "./Routes/PrivateRoute";
+import AppLayoutWrapper from "./components/UserDashboard/layout/AppLayoutWrapper";
 
 const queryClient = new QueryClient();
 
@@ -50,9 +50,4 @@ const App = () => (
 
 export default App;
 
-// This wraps child routes with AppLayout and lets <Outlet /> render them inside it
-const AppLayoutWrapper = () => (
-  <AppLayout>
-    <Outlet />
-  </AppLayout>
-);
+ 
