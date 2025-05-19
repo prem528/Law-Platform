@@ -15,7 +15,7 @@ export const lawyers: Lawyer[] = [
   {
     id: '2',
     name: 'Michael Johnson',
-    email: 'michael.johnson@lawfirm.com',
+    email: 'michael@law.com',
     specialization: 'Criminal Law',
     caseLoad: 3,
     avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
@@ -25,7 +25,7 @@ export const lawyers: Lawyer[] = [
   {
     id: '3',
     name: 'Sarah Williams',
-    email: 'sarah.williams@lawfirm.com',
+    email: 'sarah.@lawfirm.com',
     specialization: 'Family Law',
     caseLoad: 7,
     avatar: 'https://randomuser.me/api/portraits/women/67.jpg',
@@ -35,7 +35,7 @@ export const lawyers: Lawyer[] = [
   {
     id: '4',
     name: 'Robert Davis',
-    email: 'robert.davis@lawfirm.com',
+    email: 'robertdavis@lawfirm.com',
     specialization: 'Real Estate Law',
     caseLoad: 4,
     avatar: 'https://randomuser.me/api/portraits/men/46.jpg',

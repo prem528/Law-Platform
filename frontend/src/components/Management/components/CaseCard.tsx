@@ -51,7 +51,7 @@ const CaseCard = ({
 
   return (
     <Card 
-      className={`py-4 transition-all ${isSelected ? 'ring-2 ring-blue-400 shadow-lg' : 'hover:shadow-md'}`}
+      className={`py-4 cursor-pointer transition-all hover:scale-102 ${isSelected ? 'ring-2 ring-blue-400 shadow-lg' : 'hover:shadow-md'}`}
       onClick={() => onSelectCase && onSelectCase(caseItem.id)}
     >
       <CardHeader className="">

@@ -23,7 +23,7 @@ const LawyerProfileCard = ({
 
   return (
     <Card 
-      className={`transition-all cursor-pointer ${isSelected ? 'ring-2 ring-law-blue-600 shadow-lg' : 'hover:shadow-md'}`}
+      className={`py-4 transition-all cursor-pointer ${isSelected ? 'ring-2 ring-law-blue-600 shadow-lg' : 'hover:shadow-md'}`}
       onClick={handleClick}
     >
       <CardHeader className="flex flex-row items-center gap-4 pb-2">

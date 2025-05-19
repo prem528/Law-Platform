@@ -99,9 +99,8 @@ const Cases = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-50 px-12">
      
-
       <main className="flex-1 container py-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <h1 className="text-2xl font-bold">Case Management</h1>
@@ -121,13 +120,13 @@ const Cases = () => {
             <div className="flex gap-2">
               <button 
                 onClick={() => setViewMode("cards")} 
-                className={`px-3 py-1 rounded ${viewMode === "cards" ? "bg-law-blue-600 text-white" : "bg-gray-100"}`}
+                className={`px-3 cursor-pointer py-1 rounded ${viewMode === "cards" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
               >
                 Cards
               </button>
               <button 
                 onClick={() => setViewMode("table")} 
-                className={`px-3 py-1 rounded ${viewMode === "table" ? "bg-law-blue-600 text-white" : "bg-gray-100"}`}
+                className={`px-3 cursor-pointer py-1 rounded ${viewMode === "table" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
               >
                 Table
               </button>
@@ -136,7 +135,7 @@ const Cases = () => {
         </div>
 
         <Tabs defaultValue="all">
-          <TabsList className="mb-6 w-full flex overflow-x-auto">
+          <TabsList className="mb-6 w-full flex overflow-x-auto bg-blue-200 h-10">
             {statusTabs.map(tab => (
               <TabsTrigger key={tab.id} value={tab.id} className="flex-shrink-0">
                 {tab.label} ({tab.count})

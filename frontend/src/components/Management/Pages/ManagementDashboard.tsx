@@ -63,7 +63,7 @@ const ManagementDashboard = () => {
         {/* <h1 className="text-2xl font-bold mb-6">Management Dashboard</h1> */}
 
         {/* Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 px-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 ">
           <Card className="py-2">
             <CardHeader className="flex items justify-center ">
               <CardTitle className="text-xl font-normal text-gray-600">Total Cases</CardTitle>
@@ -101,10 +101,10 @@ const ManagementDashboard = () => {
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-16 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-12 py-12">
           <div className="lg:col-span-2">
-            <Tabs defaultValue="unassigned">
-              <TabsList className="bg-blue-200 w-sm h-14">
+            <Tabs defaultValue="unassigned" >
+              <TabsList className="bg-blue-200 w-sm h-14 ">
                 <TabsTrigger value="unassigned">Unassigned Cases</TabsTrigger>
                 <TabsTrigger value="lawyers">Lawyers</TabsTrigger>
               </TabsList>
@@ -129,7 +129,7 @@ const ManagementDashboard = () => {
           </div>
 
           <div>
-            <Card className="py-2">
+            <Card className="py-2 ">
               <CardHeader>
                 <CardTitle className="flex items justify-center text-xl font-light text-green-500">Assign Case</CardTitle>
               </CardHeader>
