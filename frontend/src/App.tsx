@@ -13,6 +13,10 @@ import Login from "./components/authentication/AuthPage/Login";
 import Register from "./components/authentication/AuthPage/Register";
 import PrivateRoute from "./Routes/PrivateRoute";
 import AppLayoutWrapper from "./components/UserDashboard/layout/AppLayoutWrapper";
+import ManagementDashboard from "./components/Management/Pages/ManagementDashboard";
+import ManagementLayoutWrapper from "./components/Management/layout/ManagementLayoutWrapper";
+import Cases from "./components/Management/Pages/Cases";
+import Lawyers from "./components/Management/Pages/Lawyers";
 
 const queryClient = new QueryClient();
 
@@ -24,19 +28,31 @@ const App = () => (
       <SidebarProvider>
         <BrowserRouter>
           <Routes>
-            {/* Parent route with layout */}
+          
+            {/* User Routes inside AppLayout */}
             <Route element={<AppLayoutWrapper />}>
-            <Route element={<PrivateRoute/>}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/notifications" element={<Notifications />} />
-              <Route path="/docs" element={<DocumentPage />} />
-              <Route path="/form" element={<CaseForm/>}/>
-            </Route>
+              <Route element={<PrivateRoute />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/docs" element={<DocumentPage />} />
+                <Route path="/form" element={<CaseForm />} />
+              </Route>
             </Route>
 
+            {/* Management Routes inside ManagementLayout */}
+            <Route element={<ManagementLayoutWrapper />}>
+              <Route element={<PrivateRoute />}>
+                <Route path="/management" element={<ManagementDashboard />} />
+                <Route path="lawyers" element={<Lawyers/>} />
+                <Route path="cases" element={<Cases/>} />
+              </Route>
+            </Route>
+
+
+
             {/* Authentication Page */}
-            <Route path="/login" element={<Login/>}/> 
-            <Route path="/register" element={<Register/>}/> 
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
 
             {/* 404 route */}
@@ -50,4 +66,4 @@ const App = () => (
 
 export default App;
 
- 
+
