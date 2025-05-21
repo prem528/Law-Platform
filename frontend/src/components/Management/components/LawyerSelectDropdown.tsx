@@ -30,7 +30,7 @@ import {
         <SelectContent>
           {lawyers.map((lawyer) => (
             <SelectItem key={lawyer.id} value={lawyer.id}>
-              {lawyer.name} ({lawyer.specialization}, {lawyer.caseLoad} cases)
+              {lawyer.name} ({lawyer.specialization}, {`${lawyer.experience} YOE`}, {lawyer.caseLoad} cases)
             </SelectItem>
           ))}
         </SelectContent>

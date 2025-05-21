@@ -60,56 +60,56 @@ const ManagementDashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <main className="flex-1 container py-6">
+      <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* <h1 className="text-2xl font-bold mb-6">Management Dashboard</h1> */}
 
         {/* Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
           <Card className="py-2">
-            <CardHeader className="flex items justify-center ">
-              <CardTitle className="text-xl font-normal text-gray-600">Total Cases</CardTitle>
+            <CardHeader className="flex items-center justify-center p-4">
+              <CardTitle className="text-lg sm:text-xl font-normal text-gray-600">Total Cases</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold flex items justify-center">{localCases.length}</div>
+            <CardContent className="p-4 pt-0">
+              <div className="text-3xl sm:text-4xl font-bold flex items-center justify-center">{localCases.length}</div>
             </CardContent>
           </Card>
 
           <Card className="py-2">
-            <CardHeader className="flex items justify-center">
-              <CardTitle className="text-xl font-medium text-gray-600">Unassigned Cases</CardTitle>
+            <CardHeader className="flex items-center justify-center p-4">
+              <CardTitle className="text-lg sm:text-xl font-medium text-gray-600">Unassigned Cases</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold flex items justify-center">{getCardCount('unassigned')}</div>
+            <CardContent className="p-4 pt-0">
+              <div className="text-3xl sm:text-4xl font-bold flex items-center justify-center">{getCardCount('unassigned')}</div>
             </CardContent>
           </Card>
 
           <Card className="py-2">
-            <CardHeader className="flex items justify-center">
-              <CardTitle className="text-xl font-medium text-gray-600">Active Lawyers</CardTitle>
+            <CardHeader className="flex items-center justify-center p-4">
+              <CardTitle className="text-lg sm:text-xl font-medium text-gray-600">Active Lawyers</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold flex items justify-center">{lawyers.length}</div>
+            <CardContent className="p-4 pt-0">
+              <div className="text-3xl sm:text-4xl font-bold flex items-center justify-center">{lawyers.length}</div>
             </CardContent>
           </Card>
 
           <Card className="py-2">
-            <CardHeader className="flex items justify-center">
-              <CardTitle className="text-xl font-medium text-gray-600">In Progress</CardTitle>
+            <CardHeader className="flex items-center justify-center p-4">
+              <CardTitle className="text-lg sm:text-xl font-medium text-gray-600">In Progress</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold flex items justify-center">{getCardCount('in-progress')}</div>
+            <CardContent className="p-4 pt-0">
+              <div className="text-3xl sm:text-4xl font-bold flex items-center justify-center">{getCardCount('in-progress')}</div>
             </CardContent>
           </Card>
         </div>
         
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-12 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
           <div className="lg:col-span-2">
-            <Tabs defaultValue="unassigned" >
-              <TabsList className="bg-blue-200 w-full h-14 ">
-                <TabsTrigger value="unassigned">Unassigned Cases</TabsTrigger>
-                <TabsTrigger value="lawyers">Active Lawyers</TabsTrigger>
-                <TabsTrigger value="LawFirm">Law Firms</TabsTrigger>
+            <Tabs defaultValue="unassigned">
+              <TabsList className="bg-blue-200 w-full h-12">
+                <TabsTrigger value="unassigned" className="text-sm sm:text-base">Unassigned Cases</TabsTrigger>
+                <TabsTrigger value="lawyers" className="text-sm sm:text-base">Lawyers</TabsTrigger>
+                <TabsTrigger value="LawFirm" className="text-sm sm:text-base">Law Firms</TabsTrigger>
               </TabsList>
               <TabsContent value="unassigned" className="pt-4">
                 <UnassignedCaseList
@@ -119,7 +119,7 @@ const ManagementDashboard = () => {
                 />
               </TabsContent>
               <TabsContent value="lawyers" className="pt-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {lawyers.map(lawyer => (
                     <LawyerProfileCard 
                       key={lawyer.id}
@@ -129,7 +129,7 @@ const ManagementDashboard = () => {
                 </div>
               </TabsContent>
               <TabsContent value="LawFirm" className="pt-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {lawFirms.map(firm => (
                     <LawFirmCard
                       key={firm.id}
@@ -141,21 +141,21 @@ const ManagementDashboard = () => {
             </Tabs>
           </div>
 
-          <div>
-            <Card className="py-2 ">
-              <CardHeader>
-                <CardTitle className="flex items justify-center text-xl font-light text-green-500">Assign Case</CardTitle>
+          <div className="mt-4 lg:mt-0">
+            <Card className="py-2">
+              <CardHeader className="">
+                <CardTitle className="flex items-center justify-center text-lg sm:text-xl font-light text-green-500">Assign Case</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4">
                 {!selectedCaseId ? (
-                  <div className="text-center py-6 text-gray-500">
+                  <div className="text-center py-4 sm:py-6 text-gray-500">
                     Select a case to assign to a lawyer
                   </div>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     <div>
                       <p className="text-sm text-gray-500 mb-1">Selected Case:</p>
-                      <p className="font-medium">{selectedCase?.title}</p>
+                      <p className="font-medium text-sm sm:text-base">{selectedCase?.title}</p>
                     </div>
 
                     <div className="space-y-2">
@@ -167,7 +167,7 @@ const ManagementDashboard = () => {
                       />
                     </div>
 
-                    <div className="mt-6">
+                    <div className="mt-4 sm:mt-6">
                       <AssignCaseButton
                         onAssign={handleAssignCase}
                         disabled={!selectedCaseId || !selectedLawyerId}

@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 import type { Lawyer } from "@/lib/types";
 
 interface LawyerProfileCardProps {
@@ -46,7 +48,22 @@ const LawyerProfileCard = ({
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div className="flex flex-col">
             <span className="text-gray-500">Email</span>
-            <span>{lawyer.email}</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
+                    href={`mailto:${lawyer.email}`}
+                    className="truncate max-w-[180px] block text-blue-600 hover:underline"
+                    title={lawyer.email}
+                  >
+                    {lawyer.email.length > 25
+                      ? `${lawyer.email.slice(0, 25)}...`
+                      : lawyer.email}
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>{lawyer.email}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           <div className="flex flex-col">
             <span className="text-gray-500">Phone</span>
