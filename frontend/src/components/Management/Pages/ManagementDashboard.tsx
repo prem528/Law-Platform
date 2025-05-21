@@ -6,7 +6,8 @@ import LawyerProfileCard from "../components/LawyerProfileCard";
 import LawyerSelectDropdown from "../components/LawyerSelectDropdown";
 import AssignCaseButton from "../components/AssignCaseButton";
 import type { Case } from "@/lib/types";
-import { cases, lawyers } from "@/lib/data";
+import { cases, lawFirms, lawyers } from "@/lib/data";
+import LawFirmCard from "../components/LawFirmCard";
  
  
 
@@ -100,13 +101,15 @@ const ManagementDashboard = () => {
             </CardContent>
           </Card>
         </div>
+        
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-12 py-12">
           <div className="lg:col-span-2">
             <Tabs defaultValue="unassigned" >
-              <TabsList className="bg-blue-200 w-sm h-14 ">
+              <TabsList className="bg-blue-200 w-full h-14 ">
                 <TabsTrigger value="unassigned">Unassigned Cases</TabsTrigger>
-                <TabsTrigger value="lawyers">Lawyers</TabsTrigger>
+                <TabsTrigger value="lawyers">Active Lawyers</TabsTrigger>
+                <TabsTrigger value="LawFirm">Law Firms</TabsTrigger>
               </TabsList>
               <TabsContent value="unassigned" className="pt-4">
                 <UnassignedCaseList
@@ -121,6 +124,16 @@ const ManagementDashboard = () => {
                     <LawyerProfileCard 
                       key={lawyer.id}
                       lawyer={lawyer}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+              <TabsContent value="LawFirm" className="pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {lawFirms.map(firm => (
+                    <LawFirmCard
+                      key={firm.id}
+                      lawFirm={firm}
                     />
                   ))}
                 </div>

@@ -10,6 +10,21 @@ export interface Lawyer {
     experience?: number;
   }
   
+  export interface LawFirm {
+    id: string;
+    name: string;
+    logo?: string;
+    email: string;
+    phone: string;
+    website?: string;
+    address: string;
+    specializationAreas: string[];
+    totalLawyers: number;
+    totalCases: number;
+    rating?: number; // Optional average rating (out of 5)
+    establishedYear?: number;
+  }
+  
   export interface Case {
     id: string;
     title: string;

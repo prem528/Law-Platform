@@ -1,4 +1,4 @@
-import type{ Case, Lawyer, User } from './types';
+import type{ Case, Lawyer, LawFirm, User } from './types';
 
 // Mock Lawyers
 export const lawyers: Lawyer[] = [
@@ -43,6 +43,37 @@ export const lawyers: Lawyer[] = [
     experience: 15
   }
 ];
+
+// Law Firms Mock Data
+export const lawFirms: LawFirm[] = [
+  {
+    id: "lf001",
+    name: "Justice Partners LLP",
+    logo: "https://via.placeholder.com/80x80.png?text=JP",
+    email: "contact@justicepartners.com",
+    phone: "(555) 123-4567",
+    website: "https://justicepartners.com",
+    address: "101 Main St, New York, NY 10001",
+    specializationAreas: ["Criminal Law", "Family Law", "Property Law"],
+    totalLawyers: 12,
+    totalCases: 120,
+    rating: 4.7,
+    establishedYear: 2010
+  },
+  {
+    id: "lf002",
+    name: "Global Legal Associates",
+    email: "info@globallegal.com",
+    phone: "(555) 987-6543",
+    address: "75 Elm St, San Francisco, CA 94101",
+    specializationAreas: ["Corporate Law", "International Law"],
+    totalLawyers: 18,
+    totalCases: 300,
+    rating: 4.9,
+    establishedYear: 2005
+  }
+];
+
 
 // Mock Cases
 export const cases: Case[] = [
