@@ -8,14 +8,31 @@ import AssignCaseButton from "../components/AssignCaseButton";
 import type { Case } from "@/lib/types";
 import { cases, lawFirms, lawyers } from "@/lib/data";
 import LawFirmCard from "../components/LawFirmCard";
- 
- 
+import LawFirmDropdown from "../components/LawFirmDropdown";
+import LocationDropdown from "../components/SelectLocationDropdown";
+
+interface Location {
+  country: string;
+  state: string;
+  district: string;
+}
 
 const ManagementDashboard = () => {
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
   const [selectedLawyerId, setSelectedLawyerId] = useState<string | null>(null);
   const [localCases, setLocalCases] = useState<Case[]>(cases);
   const [assigningCase, setAssigningCase] = useState(false);
+  const [assignTo, setAssignTo] = useState<"lawyer" | "firm">("lawyer");
+  const [location, setLocation] = useState<Location>({
+    country: "",
+    state: "",
+    district: ""
+  });
+
+  const handleLocationChange = (newLocation: Location) => {
+    setLocation(newLocation);
+    console.log("Selected Location:", newLocation);
+  };
 
   const handleCaseSelect = (caseId: string) => {
     setSelectedCaseId(caseId);
@@ -32,13 +49,15 @@ const ManagementDashboard = () => {
     
     // Simulate API call
     setTimeout(() => {
-      // Update the case status and assigned lawyer
+      // Update the case status and assigned lawyer/firm
       const updatedCases = localCases.map(c => {
         if (c.id === selectedCaseId) {
           return {
             ...c,
             status: 'assigned' as const,
-            assignedTo: selectedLawyerId
+            assignedTo: selectedLawyerId,
+            assignedType: assignTo,
+            location: location
           };
         }
         return c;
@@ -101,7 +120,7 @@ const ManagementDashboard = () => {
             </CardContent>
           </Card>
         </div>
-        
+
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
           <div className="lg:col-span-2">
@@ -121,7 +140,7 @@ const ManagementDashboard = () => {
               <TabsContent value="lawyers" className="pt-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {lawyers.map(lawyer => (
-                    <LawyerProfileCard 
+                    <LawyerProfileCard
                       key={lawyer.id}
                       lawyer={lawyer}
                     />
@@ -158,14 +177,52 @@ const ManagementDashboard = () => {
                       <p className="font-medium text-sm sm:text-base">{selectedCase?.title}</p>
                     </div>
 
+                    <div className="p-4 border rounded-lg">
+                      <p className="text-sm text-gray-500 mb-2">Case Location:</p>
+                      <LocationDropdown onLocationChange={handleLocationChange} />
+                    </div>
+
                     <div className="space-y-2">
                       <p className="text-sm text-gray-500">Assign to:</p>
+                      <div className="flex space-x-4">
+                        <label className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            name="assignTo"
+                            value="lawyer"
+                            checked={assignTo === "lawyer"}
+                            onChange={() => setAssignTo("lawyer")}
+                            className="cursor-pointer"
+                          />
+                          <span className="text-sm">Individual Lawyer</span>
+                        </label>
+                        <label className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            name="assignTo"
+                            value="firm"
+                            checked={assignTo === "firm"}
+                            onChange={() => setAssignTo("firm")}
+                            className="cursor-pointer"
+                          />
+                          <span className="text-sm">Law Firm</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {assignTo === "lawyer" ? (
                       <LawyerSelectDropdown
                         lawyers={lawyers}
                         selectedLawyerId={selectedLawyerId}
                         onSelect={handleLawyerSelect}
                       />
-                    </div>
+                    ) : (
+                      <LawFirmDropdown
+                        lawfirms={lawFirms}
+                        firmId={selectedLawyerId}
+                        onSelect={handleLawyerSelect}
+                      />
+                    )}
 
                     <div className="mt-4 sm:mt-6">
                       <AssignCaseButton
@@ -173,7 +230,7 @@ const ManagementDashboard = () => {
                         disabled={!selectedCaseId || !selectedLawyerId}
                         isAssigning={assigningCase}
                       />
-                    </div>  
+                    </div>
                   </div>
                 )}
               </CardContent>
