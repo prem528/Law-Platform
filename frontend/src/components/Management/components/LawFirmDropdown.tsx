@@ -15,7 +15,6 @@ import { lawFirms } from "@/lib/data";
   }
   
   const LawFirmDropdown = ({
-    lawfirms,
     firmId,
     onSelect,
   }: LawFirmDropdownProps) => {

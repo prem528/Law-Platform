@@ -1,12 +1,10 @@
 import { useState } from "react";
-
- 
 import { cases } from "@/lib/data";
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
 } from "@/components/ui/tabs";
 
 import {
@@ -28,8 +26,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import type{ Case } from "@/lib/types";
+import type { Case } from "@/lib/types";
 import CaseCard from "../components/CaseCard";
+
 
 const Cases = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,8 +43,8 @@ const Cases = () => {
 
   const searchFilteredCases = (casesToFilter: Case[]) => {
     if (!searchTerm) return casesToFilter;
-    
-    return casesToFilter.filter(c => 
+
+    return casesToFilter.filter(c =>
       c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.type.toLowerCase().includes(searchTerm.toLowerCase())
@@ -99,12 +98,13 @@ const Cases = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 px-12">
-     
+    <div className="min-h-screen flex flex-col bg-gray-50">
+
+
       <main className="flex-1 container py-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <h1 className="text-2xl font-bold">Case Management</h1>
-          
+
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="relative max-w-xs">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -116,17 +116,17 @@ const Cases = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            
+
             <div className="flex gap-2">
-              <button 
-                onClick={() => setViewMode("cards")} 
-                className={`px-3 cursor-pointer py-1 rounded ${viewMode === "cards" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+              <button
+                onClick={() => setViewMode("cards")}
+                className={`px-3 py-1 rounded ${viewMode === "cards" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               >
                 Cards
               </button>
-              <button 
-                onClick={() => setViewMode("table")} 
-                className={`px-3 cursor-pointer py-1 rounded ${viewMode === "table" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+              <button
+                onClick={() => setViewMode("table")}
+                className={`px-3 py-1 rounded ${viewMode === "table" ? "bg-blue-600 text-white" : "bg-gray-100"}`}
               >
                 Table
               </button>
@@ -135,13 +135,20 @@ const Cases = () => {
         </div>
 
         <Tabs defaultValue="all">
-          <TabsList className="mb-6 w-full flex overflow-x-auto bg-blue-200 h-10">
-            {statusTabs.map(tab => (
-              <TabsTrigger key={tab.id} value={tab.id} className="flex-shrink-0">
-                {tab.label} ({tab.count})
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="bg-blue-200 p-4 md:p-0 rounded-lg">
+            <TabsList className="mb-6 md:mb-0 w-full flex flex-wrap gap-8 bg-blue-200 h-10 ">
+              {statusTabs.map(tab => (
+                <TabsTrigger
+                  key={tab.id}
+                  value={tab.id}
+                  className="flex-shrink-0 text-sm whitespace-nowrap"
+                >
+                  {tab.label} ({tab.count})
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+
 
           {statusTabs.map(tab => (
             <TabsContent key={tab.id} value={tab.id} className="animate-fade-in">
@@ -193,15 +200,15 @@ const Cases = () => {
                 <Pagination className="mt-4">
                   <PaginationContent>
                     <PaginationItem>
-                      <PaginationPrevious 
-                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+                      <PaginationPrevious
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                         className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
                       />
                     </PaginationItem>
                     {[...Array(Math.ceil(searchFilteredCases(filterCases(tab.id)).length / itemsPerPage))].map((_, i) => (
                       <PaginationItem key={i}>
-                        <PaginationLink 
-                          isActive={currentPage === i + 1} 
+                        <PaginationLink
+                          isActive={currentPage === i + 1}
                           onClick={() => setCurrentPage(i + 1)}
                         >
                           {i + 1}
@@ -209,8 +216,8 @@ const Cases = () => {
                       </PaginationItem>
                     ))}
                     <PaginationItem>
-                      <PaginationNext 
-                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(searchFilteredCases(filterCases(tab.id)).length / itemsPerPage)))} 
+                      <PaginationNext
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(searchFilteredCases(filterCases(tab.id)).length / itemsPerPage)))}
                         className={currentPage === Math.ceil(searchFilteredCases(filterCases(tab.id)).length / itemsPerPage) ? "pointer-events-none opacity-50" : ""}
                       />
                     </PaginationItem>

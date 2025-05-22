@@ -70,7 +70,7 @@ const ManagementDashboard = () => {
     }, 800);
   };
 
-  const unassignedCases = localCases.filter(c => c.status === 'unassigned');
+  // const unassignedCases = localCases.filter(c => c.status === 'unassigned');
   const selectedCase = localCases.find(c => c.id === selectedCaseId);
 
   const getCardCount = (status: string) => {
