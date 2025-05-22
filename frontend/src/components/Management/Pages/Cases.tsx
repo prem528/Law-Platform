@@ -133,7 +133,7 @@ const Cases = () => {
         </div>
 
         <Tabs defaultValue="all">
-          <div className="pt-0 pb-12 sm:py-0 rounded-md bg-blue-200">
+          <div className="pt-0 pb-12 sm:pt-0 sm:pb-0  sm:py-0 rounded-md bg-blue-200">
             <div className="bg-blue-200 rounded-md p-2">
               <TabsList className="grid w-full grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-2 bg-blue-200">
                 {statusTabs.map(tab => (
@@ -159,8 +159,8 @@ const Cases = () => {
                   ))}
                 </div>
               ) : (
-                <div className="rounded-md border overflow-hidden overflow-x-auto">
-                  <Table>
+                <div className="rounded-md border overflow-x-auto">
+                  <Table className="min-w-[800px]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>Title</TableHead>
@@ -187,6 +187,7 @@ const Cases = () => {
                     </TableBody>
                   </Table>
                 </div>
+
               )}
 
               {searchFilteredCases(filterCases(tab.id)).length === 0 && (
