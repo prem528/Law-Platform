@@ -27,8 +27,8 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Case } from "@/lib/types";
-import CaseCard from "../components/CaseCard";
 
+import CaseCard from "../components/CaseCard";
 
 const Cases = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -99,8 +99,6 @@ const Cases = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-
-
       <main className="flex-1 container py-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <h1 className="text-2xl font-bold">Case Management</h1>
@@ -120,13 +118,13 @@ const Cases = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => setViewMode("cards")}
-                className={`px-3 py-1 rounded ${viewMode === "cards" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
+                className={`px-3 py-1 rounded ${viewMode === "cards" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
               >
                 Cards
               </button>
               <button
                 onClick={() => setViewMode("table")}
-                className={`px-3 py-1 rounded ${viewMode === "table" ? "bg-blue-600 text-white" : "bg-gray-100"}`}
+                className={`px-3 py-1 rounded ${viewMode === "table" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
               >
                 Table
               </button>
@@ -135,31 +133,33 @@ const Cases = () => {
         </div>
 
         <Tabs defaultValue="all">
-          <div className="bg-blue-200 p-4 md:p-0 rounded-lg">
-            <TabsList className="mb-6 md:mb-0 w-full flex flex-wrap gap-8 bg-blue-200 h-10 ">
-              {statusTabs.map(tab => (
-                <TabsTrigger
-                  key={tab.id}
-                  value={tab.id}
-                  className="flex-shrink-0 text-sm whitespace-nowrap"
-                >
-                  {tab.label} ({tab.count})
-                </TabsTrigger>
-              ))}
-            </TabsList>
+          <div className="pt-0 pb-12 sm:py-0 rounded-md bg-blue-200">
+            <div className="bg-blue-200 rounded-md p-2">
+              <TabsList className="grid w-full grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-2 bg-blue-200">
+                {statusTabs.map(tab => (
+                  <TabsTrigger
+                    key={tab.id}
+                    value={tab.id}
+                    className="w-full text-center py-2 text-sm sm:text-base"
+                  >
+                    {tab.label} ({tab.count})
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
           </div>
 
 
           {statusTabs.map(tab => (
             <TabsContent key={tab.id} value={tab.id} className="animate-fade-in">
               {viewMode === "cards" ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
                   {paginateResults(searchFilteredCases(filterCases(tab.id))).map(caseItem => (
                     <CaseCard key={caseItem.id} caseItem={caseItem} />
                   ))}
                 </div>
               ) : (
-                <div className="rounded-md border overflow-hidden">
+                <div className="rounded-md border overflow-hidden overflow-x-auto">
                   <Table>
                     <TableHeader>
                       <TableRow>
