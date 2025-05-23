@@ -14,7 +14,7 @@ const Lawyers = () => {
   );
 
   return (
-    <div className="min-h-screen flex flex-col px-16">
+    <div className="min-h-screen flex flex-col px-2 sm:px-8">
        
 
       <main className="flex-1 container py-6">

@@ -17,6 +17,7 @@ import ManagementDashboard from "./components/Management/Pages/ManagementDashboa
 import ManagementLayoutWrapper from "./components/Management/layout/ManagementLayoutWrapper";
 import Cases from "./components/Management/Pages/Cases";
 import Lawyers from "./components/Management/Pages/Lawyers";
+import CaseTable from "./components/Management/Pages/testTable";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="/management" element={<ManagementDashboard />} />
                 <Route path="lawyers" element={<Lawyers/>} />
                 <Route path="cases" element={<Cases/>} />
+                <Route path="test" element={<CaseTable/>} />
               </Route>
             </Route>
 

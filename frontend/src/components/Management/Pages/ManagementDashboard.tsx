@@ -79,7 +79,7 @@ const ManagementDashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+      <main className="flex-1 container mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* <h1 className="text-2xl font-bold mb-6">Management Dashboard</h1> */}
 
         {/* Overview Cards */}
@@ -122,7 +122,7 @@ const ManagementDashboard = () => {
         </div>
 
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 px-0 sm:px-4  py-4 sm:py-8">
           <div className="lg:col-span-2">
             <Tabs defaultValue="unassigned">
               <TabsList className="bg-blue-200 w-full h-12">

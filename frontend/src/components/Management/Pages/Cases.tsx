@@ -98,7 +98,7 @@ const Cases = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-50 px-2 sm:px-8">
       <main className="flex-1 container py-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <h1 className="text-2xl font-bold">Case Management</h1>
@@ -133,8 +133,8 @@ const Cases = () => {
         </div>
 
         <Tabs defaultValue="all">
-          <div className="pt-0 pb-12 sm:pt-0 sm:pb-0  sm:py-0 rounded-md bg-blue-200">
-            <div className="bg-blue-200 rounded-md p-2 sm:p-0">
+          <div className="pt-0 pb-12 sm:pt-0 sm:pb-12 md:pb-0  sm:py-0 rounded-md bg-blue-200">
+            <div className="bg-blue-200 rounded-md p-2 sm:p-0 ">
               <TabsList className="grid w-full grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:h-12 bg-blue-200">
                 {statusTabs.map(tab => (
                   <TabsTrigger
